@@ -1,0 +1,101 @@
+site_name: FORCE AI
+repo_url: https://github.com/NCKU-AISLAB/force-ai
+repo_name: aislab/force-ai
+
+theme:
+  name: material
+  language: en
+  icon:
+    repo: fontawesome/brands/github
+
+  palette:
+    # Light mode
+    - scheme: default
+      primary: cyan
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+
+    # Dark mode
+    - scheme: slate
+      primary: blue
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+
+  features:
+    - navigation.instant
+    - navigation.tabs
+    - navigation.path
+    - navigation.top
+    - navigation.footer
+    - content.code.copy
+    - content.code.select
+    - content.code.annotate
+
+nav:
+  - Home: index.md
+  - Quick Start: quick-start.md
+  - Tutorial:
+    - 2025sp/lab1.md
+    - 2025sp/lab2.md
+    - 2025sp/lab3.md
+    - 2025sp/lab4.md
+    - 2025sp/lab5.md
+  - Developer Guides: developers.md
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/NCKU-AISLAB/force-ai
+
+plugins:
+  - search
+  - i18n:
+      docs_structure: folder
+      languages:
+        - locale: en
+          default: true
+          name: English
+          build: true
+        - locale: zh-TW
+          name: 繁體中文
+          build: true
+
+markdown_extensions:
+  - toc:
+      toc_depth: 3
+  - pymdownx.arithmatex:
+      generic: true
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+  - attr_list
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - md_in_html
+  - pymdownx.blocks.caption
+  - pymdownx.critic
+  - pymdownx.caret
+  - pymdownx.keys
+  - pymdownx.mark
+  - pymdownx.tilde
+  - mkdocs_graphviz
+
+extra_javascript:
+  - javascripts/mathjax.js
+  - https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js
+  - https://cdn.jsdelivr.net/gh/rod2ik/cdn@main/mkdocs/javascripts/mkdocs-graphviz.js
