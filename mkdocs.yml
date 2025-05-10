@@ -58,7 +58,7 @@ plugins:
           default: true
           name: English
           build: true
-        - locale: zh-TW
+        - locale: zh
           name: 繁體中文
           build: true
 
