@@ -524,14 +524,14 @@ else:
 After understanding how Eyeriss performs the Conv2d operation, the next step is to evaluate the system's performance under different parameter configurations. Below, we list several performance metrics:
 
 - memory related
-    - [GLB Usage](#GLB-Usage)
-    - [GLB Access](#GLB-Access)
-    - [DRAM Access](#DRAM-Access)
+    - [GLB Usage](#glb-usage)
+    - [GLB Access](#glb-access-data-transfer-between-glb-and-spads)
+    - [DRAM Access](#dram-access-data-transfer-between-dram-and-glb)
 - compute related
-    - [MACs](#MACs)
-    - [Latency](#Latency)
+    - [MACs](#macs)
+    - [Latency](#latency)
 - energy related
-    - [Power Consumption](#Power-and-Energy-Consumption)
+    - [Power Consumption](#power-and-energy-consumption)
 
 #### GLB Usage
 
@@ -602,8 +602,6 @@ $$
     The unit of latency here is **cycles**, and the number of DRAM/GLB accesses are **bytes**. Thus, the DRAM/GLB access time of the following equation should be **cycles/byte**.
 
     However, in the provided sample code, the units of `DRAM_ACCESS_TIME` and `GLB_ACCESS_TIME` are **cycles/transaction**, so they should be divided by `bus_bw` and `noc_bw` (unit: **bytes/transcation**), respectively.
-
-    See [FAQ](/H0UvbHzuTveq88PqghDITw#Units-in-the-Latency-Computation) for more details.
 
 $$
 \begin{align}
@@ -714,7 +712,7 @@ class EyerissAnalyzer:
         pass
 ```
 
-When initializing the `EyerissAnalyzer`, you need to specify the `EyerissHardwareParam` (see [Hardware Parameters](#Hardware-Parameters)). Then, based on the results from network parsing, input the information for the Conv2d and MaxPool2d layers into the analytical model (see [Defining Layer Information](#Defining-Layer-Information-Class)). Finally, set the desired mapping parameters for analysis (see [Dataflow Mapping Parameters](#Dataflow-Mapping-Parameters)). The numbers below are just examples, and you can try different settings.
+When initializing the `EyerissAnalyzer`, you need to specify the `EyerissHardwareParam` (see [Hardware Parameters](#hardware-parameters)). Then, based on the results from network parsing, input the information for the Conv2d and MaxPool2d layers into the analytical model (see [Defining Layer Information](#defining-layer-information-class)). Finally, set the desired mapping parameters for analysis (see [Dataflow Mapping Parameters](#dataflow-mapping-parameters)). The numbers below are just examples, and you can try different settings.
 
 ```python
 eyeriss = EyerissAnalyzer(
@@ -738,7 +736,7 @@ eyeriss.mapping = EyerissMappingParam(m=16, n=1, e=8, p=4, q=4, r=1, t=2)
 #### Performance Estimation
 
 
-In the previous [Performance Metrics](#Performance-Metrics) section, we mentioned several performance indicators that we care about. The analytical model is responsible for calculating these performance metrics based on the settings above. The `EyerissAnalyzer` provides the following APIs to perform this task:
+In the previous [Performance Metrics](#performance-metrics) section, we mentioned several performance indicators that we care about. The analytical model is responsible for calculating these performance metrics based on the settings above. The `EyerissAnalyzer` provides the following APIs to perform this task:
 
 ```python
 @property
@@ -1201,7 +1199,7 @@ Either as screenshots or copied output text is acceptable.
 
 ### 2. Network Parser
 
-In Lab 5, we will use an ONNX-format model as input for the AI compiler. In this lab, we will learn how to convert a model into a format that an analytical model can process. The definition of that format is defined with Python [dataclass](https://docs.python.org/3/library/dataclasses.html) and previously-mentioned in [Defining Layer Information Class](#Defining-Layer-Information-Class). The provided example code includes a script for converting PyTorch models to ONNX, and the lecture notes explain how to parse PyTorch models.
+In Lab 5, we will use an ONNX-format model as input for the AI compiler. In this lab, we will learn how to convert a model into a format that an analytical model can process. The definition of that format is defined with Python [dataclass](https://docs.python.org/3/library/dataclasses.html) and previously-mentioned in [Defining Layer Information Class](#defining-layer-information-class). The provided example code includes a script for converting PyTorch models to ONNX, and the lecture notes explain how to parse PyTorch models.
 
 Students are required to complete the following two functions defined in `network_parser/network_parser.py` and used to convert models into the format defined in `layer_info.py`:
 
@@ -1230,9 +1228,6 @@ To complete this assignment, students must:
 2. (15%) Implement the specified getter functions in the `EyerissAnalyzer` class in `analytical_model/eyeriss.py`. **Students must strictly follow the API specifications** defined in the lecture notes and sample code, including input and output data types for each function. Grading will be based on the success rate of automated tests, including edge case evaluations.
 
 Similarly, you can create your own test program or function to verify the correctness of your implementation.
-
-!!! Tip
-    If you are not quite sure if your implmentation is correct, please refer to [Lab 2 FAQ](/H0UvbHzuTveq88PqghDITw#How-to-Check-the-Correctness-of-My-Analytical-Model) for reference answers.
 
 ### 4. Roofline Model
 

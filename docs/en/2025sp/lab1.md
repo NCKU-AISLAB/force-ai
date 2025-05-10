@@ -568,17 +568,17 @@ $$
 
 In this section, we will demonstrate how to perform quantization with PyTorch framework with a simple yet comprehensive example.
 
-![image](https://hackmd.io/_uploads/BkltWIkK1l.png =60%x)
+![image](https://hackmd.io/_uploads/BJbmDv3xlx.png){ width=50% }
 
 Let's discuss the quantization process using PyTorch step by step:
 
-1. [Calibration Data](#1-Calibration-Data)
-2. [Pre-trained Model](#2-Pre-trained-Model)
-3. [Customization Quantization Scheme](#3-Customization-Quantization-Scheme)
-4. [Operator Fusion](#4-Operator-Fusion)
-5. [Insert Observer](#5-Insert-Observer)
-6. [Calibration](#6-Calibration)
-7. [Quantization](#7-Quantization)
+1. [Calibration Data](#1-calibration-data)
+2. [Pre-trained Model](#2-pre-trained-model)
+3. [Customize Quantization Scheme](#3-customize-quantization-scheme)
+4. [Operator Fusion](#4-operator-fusion)
+5. [Insert Observer](#5-insert-observer)
+6. [Calibration](#6-calibration)
+7. [Quantization](#7-quantization)
 
 #### 1. Calibration Data
 
