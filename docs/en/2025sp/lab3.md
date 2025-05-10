@@ -24,11 +24,6 @@ Students can try to think about how to fine-tune the Eyeriss architecture so tha
 In Lab 3, we will design our accelerator based on the Eyeriss paper.
 You can [download the paper](https://moodle.ncku.edu.tw/pluginfile.php/1801205/mod_assign/introattachment/0/Eyeriss.pdf?forcedownload=1) through Moodle.
 
-<!--
-There is a tutorial video for Eyeriss, provided for students who are not yet familiar with this paper or those who want to review it.
-
-{%youtube slPuqc3f45o %} -->
-
 ## Post Processing Unit
 
 Besides `Conv2D` fused with `BatchNorm2D` and `linear` operations,
