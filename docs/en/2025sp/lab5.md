@@ -43,15 +43,14 @@ AI compilers enable the deployment of models from high-level frameworks like Ten
 
 One such compiler is [TVM](https://tvm.apache.org/), an open-source machine learning compiler framework designed to optimize and deploy deep learning models efficiently across diverse hardware targets. TVM automates the process of translating models into optimized code tailored to specific hardware architectures.
 
-![image](https://hackmd.io/_uploads/S1JipjLyll.png)
+![image](/assets/images/S1JipjLyll.png)
 
 ### Bring Your Own Codegen (BYOC)
 The compilation process begins by converting models from TensorFlow or PyTorch into an Intermediate Representation (IR). In the high-level IR, computations are structured as a computation graph, where each node represents an operation (e.g., matrix multiplication, convolution). This graph is then progressively optimized through multiple stages. Finally, TVM’s code generation (codegen) module translates the optimized IR into low-level C code or other backend-specific code for execution on the target hardware.
 
 For more information about BYOC, see [How to Bring Your Own Codegen to TVM](https://tvm.apache.org/2020/07/15/how-to-bring-your-own-codegen-to-tvm)
 
-```dot
-digraph compiler_flow {
+<!--digraph compiler_flow {
     rankdir=LR;
     node [shape=box style=filled fontname="Arial"];
 
@@ -80,8 +79,10 @@ digraph compiler_flow {
     // Virtual label node for computing graph
     cg_label [label="computing graph",fillcolor="#ffffff", shape=none, fontsize=10];
     { rank=same; cg_label; optimization }
-}
-```
+}-->
+
+<img src="/assets/svgs/lab5_graphviz_0.svg" alt="graphviz_0">
+
 
 !!! question "Question: What will Relay look like?"
 
@@ -104,8 +105,7 @@ In typical scenarios, TVM's C code generator is implemented as a C++ class that 
 
 According to the **BYOC (Bring Your Own Codegen)** framework, in order to produce an executable as part of the standard TVM compilation flow, the custom code generator must conform to the DLPack specification, and data transmission must utilize DLTensor. However, since our approach focuses on an end-to-end code generation flow, we bypass TVM’s generated output files. Instead, we directly invoke our code generator to produce both the model’s C source code and the corresponding binary weight data.
 
-```dot
-digraph tvm_codegen_flow {
+<!--digraph tvm_codegen_flow {
     rankdir=TB;
     splines=false;
     node [shape=box style=filled fontname="Arial"];
@@ -141,8 +141,10 @@ digraph tvm_codegen_flow {
     codegen -> model_c;
     codegen -> weight_c;
     codegen -> runtime;
-}
-```
+}-->
+
+<img src="/assets/svgs/lab5_graphviz_1.svg" alt="graphviz_1">
+
 
 ## Lab 5.2 - Optimization
 
@@ -210,8 +212,7 @@ After applying these operations, we quantize the result back to the original dat
 
 - The following diagram illustrates the structure of the pattern:
 
-```dot
-digraph pattern {
+<!--digraph pattern {
     node [shape=box, style=filled, color=lightyellow];
 
     i [label="wildcard\n(i)"];
@@ -256,8 +257,10 @@ digraph pattern {
     relu -> quant [label="  relu_op"];
     quant -> cast [label="  quantize_op"];
     cast -> cast_op;
-}
-```
+}-->
+
+<img src="/assets/svgs/lab5_graphviz_2.svg" alt="graphviz_2">
+
 
 Following the fusion and annotation of the model subgraph, the subsequent step involves generating customized C code aligned with the target ASIC driver and its corresponding API.
 
@@ -277,8 +280,7 @@ The codegen process is organized into three core components under `/Python/utils
 
 This modular design not only increases code readability and reusability but also separates concerns clearly, making it easier to maintain and extend the system for different target hardware or model structures.
 
-```dot
-digraph G {
+<!--digraph G {
     node [shape=box, style=filled, fillcolor=lightgray];
 
     subgraph cluster_outer1{
@@ -390,8 +392,10 @@ digraph G {
 
     tvm_auto_args_NOTES -> visit_expr [label=" Get tensor info", style=dashed];
     tvm_c_func_call_gen -> visit_expr [label=" Get codegen function", style=dashed];
-}
-```
+}-->
+
+<img src="/assets/svgs/lab5_graphviz_3.svg" alt="graphviz_3">
+
 
 ### TVM Relay External Codegen: C Backend Walkthrough - `codegen.py`
 
@@ -1056,12 +1060,12 @@ It includes:
 
 3. Open the output file:
    - Click **Open...**
-   ![Open Massif Visualizer](https://hackmd.io/_uploads/BJtaDetkgl.png)
+   ![Open Massif Visualizer](/assets/images//BJtaDetkgl.png)
    - Choose `massif.out.massif_test`
-   ![Open files](https://hackmd.io/_uploads/Bkw7ueYkll.png)
+   ![Open files](/assets/images//Bkw7ueYkll.png)
 
 4. View the memory usage graph:
-   ![Massif Graph](https://hackmd.io/_uploads/r14cueFJgx.png)
+   ![Massif Graph](/assets/images//r14cueFJgx.png)
 
 This visualization helps you easily pinpoint memory-intensive regions and track memory growth over time.
 There are also gui application called `massif-visualizer`, it is...
@@ -1401,7 +1405,7 @@ xychart-beta
 
 !!! tip "VS Code Extension - Markdown Preview Mermaid"
     This extension allows you to preview Mermaid diagrams directly in Markdown files.
-    ![Preview Screenshot](https://hackmd.io/_uploads/Hkc4zjcJle.png)
+    ![Preview Screenshot](/assets/images//Hkc4zjcJle.png)
 
 ### Clean Up
 
