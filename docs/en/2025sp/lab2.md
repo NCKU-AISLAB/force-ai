@@ -892,19 +892,19 @@ With the above formulation, we can plot the performance bound as follows:
 - black solid line: performance upper bound of a given hardware
 - red dashed line: machine balance point, separating the memory-bound (left) and compute-bound (right) regions
 
-![roofline-baseline](/assets/images//BkMeq19o1g.png)
+![roofline-baseline](/assets/images/BkMeq19o1g.png)
 
 For a given hardware architecture, different mapping parameter choices leads to different number of memory accesses, and hence affect the operational intensity (OI). The following figure shows that Mapping 1 (OI = 8 < 12) is memory-bound, and Mapping 2 (OI = 18 > 12) is compute-bound.
 
 <!-- ![roofline-mapping](/assets/images//rJnJ9y9oJe.png) -->
 
-![roofline-mapping](/assets/images//SJi-Cxqikg.png)
+![roofline-mapping](/assets/images/SJi-Cxqikg.png)
 
 Changes in hardware parameters alter the capacity, leading to different rooflines. For the same workload (fixed OI = 16), it is compute-bound on Hardware 1 with 48 PEs, while it is memory-bound on Hardware 2 with 72 PEs.
 
 <!-- ![roofline-hardware](https://hackmd.io/_uploads/SyQgmgciye.png) -->
 
-![roofline-hardware](/assets/images//rkU0Agcoyl.png)
+![roofline-hardware](/assets/images/rkU0Agcoyl.png)
 
 
 We provide a Python script `roofline.py` in the project root to plot the roofline model. It supports the following functionalities:

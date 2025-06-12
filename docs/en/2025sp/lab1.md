@@ -244,7 +244,7 @@ This introduces additional subtraction operations, increasing the computational 
 - clipping range $= [\alpha, \beta]$
 - dynamic range $= [r_\min, r_\max]$
 
-![image](/assets/images/Hy_vtgJ91g.png) { width=70% }
+![image](/assets/images/Hy_vtgJ91g.png){width=70%}
 
 #### Min-Max Clipping
 
@@ -343,7 +343,7 @@ In QAT, since quantization is non-differentiable, standard backpropagation canno
 ![image](/assets/images/HyEjRlk5Jg.png)
 
 ### Quantization Errors
-<center><img width=40% src="/assets/images//ByoP0iHTC.png"></center>
+<center><img width=60% src="/assets/images/ByoP0iHTC.png"></center>
 
 A metric to evaluate the numerical error introduced by quantization.
 
