@@ -4,7 +4,7 @@
 
 In this lab, we will design an accelerator based on the Eyeriss paper. The goal is to implement the hardware architecture required to efficiently compute the VGG-8 model designed in Lab 1.
 
-![image](https://hackmd.io/_uploads/Hyd3aH9KJg.png =500x)
+![image](/assets/images/Hyd3aH9KJg.png)
 
 This includes key operations such as `2D Convolution` fused with `BatchNorm2D`, `Linear`, `ReLU`, `MaxPool`, and `Post-Quantization`.
 
@@ -22,7 +22,8 @@ Students can try to think about how to fine-tune the Eyeriss architecture so tha
 ## Eyeriss
 
 In Lab 3, we will design our accelerator based on the Eyeriss paper.
-You can [download the paper](https://moodle.ncku.edu.tw/pluginfile.php/1801205/mod_assign/introattachment/0/Eyeriss.pdf?forcedownload=1) through Moodle.
+
+<iframe width="800" height="450" src="https://www.youtube.com/embed/slPuqc3f45o" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ## Post Processing Unit
 
@@ -292,7 +293,7 @@ $$
 
 ## Hardware Architecture
 
-![image](https://hackmd.io/_uploads/Hk4PcsK9ye.png)
+![image](/assets/images/Hk4PcsK9ye.png)
 
 ### Controller
 The Controller in Eyeriss acts as the central unit that orchestrates the entire execution process. It ensures that different modules operate in a synchronized manner and that the correct data is processed at the right time. The key responsibilities of the Controller include:
@@ -414,7 +415,7 @@ In a typical handshake, control signals are exchanged between the sender and rec
 
 #### Ready-Valid Handshake (Common in AXI Protocols):
 
-![image](https://hackmd.io/_uploads/rJBnV4P91e.png)
+![image](/assets/images/rJBnV4P91e.png)
 - A widely used mechanism in hardware interfaces where the sender asserts a valid signal when data is available, and the receiver asserts a ready signal when it is ready to consume the data.
 - The transaction is completed when both valid and ready signals are asserted simultaneously.
 - In this lab, we use this for our handshake mechanism
@@ -473,7 +474,7 @@ These are the shape parameters and mapping parameters defined by Eyeriss. They w
 
 When loading the ifmap, you must first subtract the zero-point.
 Since we use uint8 symmetric quantization, the zero-point is 128
-For details, refer to the [Lab1 HackMD handout](https://hackmd.io/@yutingshih/aoc2025/%2Fq9JuAj-qRtCdLSsErp0NFg#SymmetricAsymmetric).
+For details, refer to the [Lab1 HackMD handout](/2025sp/lab1).
 
 **You should adopt a more hardware-friendly approach to replace this subtraction**.
 **Otherwise, points may be deducted accordingly.**
@@ -483,8 +484,7 @@ For details, refer to the [Lab1 HackMD handout](https://hackmd.io/@yutingshih/ao
 The PE computes a 1-D convolution primitive. The PE waits for the testbench to assert `PE_en`. Once `PE_en` is high, `PE_config` becomes valid, and the PE reads its contents to determine the information for the current 1-D convolution computation. Afterward, the testbench starts sending and retrieving data through a handshake mechanism. The process continues until the computation is complete.
 
 The following is the definition of `PE_config`
-```dot
-digraph {
+<!--digraph {
     rankdir="LR"
     node [shape=record];
     bits [label="{
@@ -494,8 +494,10 @@ digraph {
         {{6|5|4|3|2}|F-1} |
         {{1|0}|q-1}
     }"];
-}
-```
+}-->
+
+<img src="/assets/svgs/lab3_graphviz_0.svg" alt="graphviz_0">
+
 `mode = 0` means `CONV`
 `mode = 1` means `FC Layer`
 
@@ -527,8 +529,9 @@ module PE (
 
 If a 1-D convolution needs to be computed as shown below:
 
-{%speakerdeck yishuo0802/pe-testbench-data-order %}
+<!--{%speakerdeck yishuo0802/pe-testbench-data-order %}-->
 
+<iframe class="speakerdeck-iframe" frameborder="0" src="https://speakerdeck.com/player/fd0f9f0ea90742bea37f75d83e877edf" title="pe-testbench-data-order" allowfullscreen="true" style="border: 0px; background: padding-box rgba(0, 0, 0, 0.1); margin: 0px; padding: 0px; border-radius: 6px; box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 40px; width: 100%; height: auto; aspect-ratio: 560 / 315;" data-ratio="1.7777777777777777"></iframe>
 
 #### PE Array
 
@@ -602,13 +605,17 @@ make pe%
 
 If a 2-D convolution needs to be computed as shown below:
 
-{%speakerdeck yishuo0802/pe-array %}
+<!--{%speakerdeck yishuo0802/pe-array %}-->
+
+<iframe class="speakerdeck-iframe" frameborder="0" src="https://speakerdeck.com/player/99b4cc17533d4068a3a5a7d9722dc09b" title="pe-array" allowfullscreen="true" style="border: 0px; background: padding-box rgba(0, 0, 0, 0.1); margin: 0px; padding: 0px; border-radius: 6px; box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 40px; width: 100%; height: auto; aspect-ratio: 560 / 315;" data-ratio="1.7777777777777777"></iframe>
+
+
 
 In addtion to PE array, you need to implement the following submodules to construct it.
 
 #### GIN/GON
 
-![image](https://hackmd.io/_uploads/SkhAoOoFkl.png)
+![image](/assets/images/SkhAoOoFkl.png)
 
 ##### I/O ports
 
@@ -695,7 +702,9 @@ module GIN_MulticastController #(
 #### Testbench Behavior
 The following slides illustrate how the testbench sends the config ID to the bus.
 
-{%speakerdeck yishuo0802/network %}
+<!--{%speakerdeck yishuo0802/network %}-->
+
+<iframe class="speakerdeck-iframe" frameborder="0" src="https://speakerdeck.com/player/f9615a97015349468e4f57e381d7057c" title="network" allowfullscreen="true" style="border: 0px; background: padding-box rgba(0, 0, 0, 0.1); margin: 0px; padding: 0px; border-radius: 6px; box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 40px; width: 100%; height: auto; aspect-ratio: 560 / 315;" data-ratio="1.7777777777777777"></iframe>
 
 #### Instruction
 
@@ -757,7 +766,7 @@ the testbench will provide the first data sample when maxpool_init is asserted, 
 - MaxPool is not required
 the testbench will read the output data in the cycle following the data input.
 
-![image](https://hackmd.io/_uploads/rJfmA399Jx.png)
+![image](/assets/images/rJfmA399Jx.png)
 
 
 #### I/O ports
