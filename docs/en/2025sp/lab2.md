@@ -75,7 +75,7 @@ Common accelerators used for Conv2d have the following architectures:
 
 In the following Labs, we will design the accelerator based on the Eyeriss architecture. Below is the system architecture diagram from the original Eyeriss paper.
 
-![eyeriss-architecture](https://hackmd.io/_uploads/Byzd4qOc1x.png)
+![eyeriss-architecture](/assets/images//Byzd4qOc1x.png)
 
 Since the implementation of the Lab is for educational purposes, we will not be implementing the entire Eyeriss accelerator but will simplify it in line with the same principles. Overall, we will have a row-stationary dataflow PE array to perform Conv2d and ReLU computations. The parameters for BatchNorm can be pre-fused into the Conv2d weights and biases (the derivation process can be referenced in the Lab 1 lecture notes), so there will be no dedicated hardware support for BatchNorm. Finally, MaxPool is a memory-bound operation. By further integrating its dataflow with the Conv2d dataflow, we can reduce DRAM access and speed up the overall computation process. Therefore, we will design a module responsible for performing the MaxPool operation before the activation is written back to DRAM.
 
@@ -293,9 +293,9 @@ result = session.run(None, {"input": input_data})
 An ONNX model can be visualized by using [Netron](https://github.com/lutzroeder/netron), and the result looks like this:
 
 - full-precision model (FP32)
-    ![netron-fp32](https://hackmd.io/_uploads/S1Y4IwOqye.png)
+    ![netron-fp32](/assets/images//S1Y4IwOqye.png)
 - quantized model (INT8)
-    ![netron-int8](https://hackmd.io/_uploads/B1mLHDdq1g.png)
+    ![netron-int8](/assets/images//B1mLHDdq1g.png)
 
 Students, try using Netron to visualize your own custom-designed model. Observe how the model architecture changes before and after quantization.
 
@@ -387,9 +387,9 @@ class EyerissMappingParam:
 Eyeriss employs a 2D array of PEs, each responsible for performing MAC operations. The PE array in Eyeriss is configurable. Thus, we can further partition the entire PE array into several PE sets to improve PE utilization rate and data reuse. A PE set is a logical grouping of PEs that are assigned to process a specific part of the convolution operation. since we apply the row-stationary dataflow, the height of a PE set is determined by the filter height R.
 
 For instance, we have a 6*8 PE array:
-![image](https://hackmd.io/_uploads/r1usPAqi1l.png)
+![image](/assets/images/r1usPAqi1l.png)
 We assume that the height of the filters is 3; then, we can separate the PE set like this:
-![image](https://hackmd.io/_uploads/H1Bjd05jJx.png)
+![image](/assets/images/H1Bjd05jJx.png)
 
 There're plenty of methods to assign these PE sets.
 In this example, e for a PE set is 4, which means that one PE set can process 4 rows of ofmap at a time. The values of m, n, p, and q are constrained by the on-chip memory (GLB or Spad).
@@ -428,6 +428,13 @@ Notice that **r × t must equal 4** in this example. Either different PE sets pr
 
 Below, we map a Conv2d operator to the Eyeriss DLA and label the Conv2d shape parameters and mapping parameters using the notation from the paper.
 We present the execution of Eyeriss tiling in each processing pass using a PPT to illustrate how data is processed in a single pass. The light blue-gray blocks represent the amount of data that can be processed in a single processing pass.
+
+
+- Youtube Video
+<iframe width="800" height="450" src="https://www.youtube.com/embed/MwsqeRTenXs" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+- Slides
+<iframe class="speakerdeck-iframe" frameborder="0" src="https://speakerdeck.com/player/164d03c61f9848ddb463f0010bff57cf?slide=1" title="AOC2025_-_Lab2tile.pdf" allowfullscreen="true" style="border: 0px; background: padding-box padding-box rgba(0, 0, 0, 0.1); margin: 0px; padding: 0px; border-radius: 6px; box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 40px; width: 100%; height: auto; aspect-ratio: 560 / 315;" data-ratio="1.7777777777777777"></iframe>
 
 #### Loop Nests Representation for Conv2D Tiling
 
@@ -885,19 +892,19 @@ With the above formulation, we can plot the performance bound as follows:
 - black solid line: performance upper bound of a given hardware
 - red dashed line: machine balance point, separating the memory-bound (left) and compute-bound (right) regions
 
-![roofline-baseline](https://hackmd.io/_uploads/BkMeq19o1g.png)
+![roofline-baseline](/assets/images//BkMeq19o1g.png)
 
 For a given hardware architecture, different mapping parameter choices leads to different number of memory accesses, and hence affect the operational intensity (OI). The following figure shows that Mapping 1 (OI = 8 < 12) is memory-bound, and Mapping 2 (OI = 18 > 12) is compute-bound.
 
-<!-- ![roofline-mapping](https://hackmd.io/_uploads/rJnJ9y9oJe.png) -->
+<!-- ![roofline-mapping](/assets/images//rJnJ9y9oJe.png) -->
 
-![roofline-mapping](https://hackmd.io/_uploads/SJi-Cxqikg.png)
+![roofline-mapping](/assets/images//SJi-Cxqikg.png)
 
 Changes in hardware parameters alter the capacity, leading to different rooflines. For the same workload (fixed OI = 16), it is compute-bound on Hardware 1 with 48 PEs, while it is memory-bound on Hardware 2 with 72 PEs.
 
 <!-- ![roofline-hardware](https://hackmd.io/_uploads/SyQgmgciye.png) -->
 
-![roofline-hardware](https://hackmd.io/_uploads/rkU0Agcoyl.png)
+![roofline-hardware](/assets/images//rkU0Agcoyl.png)
 
 
 We provide a Python script `roofline.py` in the project root to plot the roofline model. It supports the following functionalities:
