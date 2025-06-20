@@ -1,0 +1,1871 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../lab2/">
+      
+      
+        <link rel="next" href="../lab4/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.14">
+    
+    
+      
+        <title>Lab 3 - Hardware Architecture Design - FORCE AI</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.342714a4.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="cyan" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#lab-3-hardware-architecture-design" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="FORCE AI" class="md-header__button md-logo" aria-label="FORCE AI" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            FORCE AI
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Lab 3 - Hardware Architecture Design
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="cyan" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+      <div class="md-header__option">
+  <div class="md-select">
+    
+    <button class="md-header__button md-icon" aria-label="Select language">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12.87 15.07-2.54-2.51.03-.03A17.5 17.5 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2zm-2.62 7 1.62-4.33L19.12 17z"/></svg>
+    </button>
+    <div class="md-select__inner">
+      <ul class="md-select__list">
+        
+          <li class="md-select__item">
+            <a href="./" hreflang="en" class="md-select__link">
+              English
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="../../zh/2025sp/lab3/" hreflang="zh" class="md-select__link">
+              繁體中文
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</div>
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/NCKU-AISLAB/force-ai" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    aislab/force-ai
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../quick-start/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Quick Start
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../lab1/" class="md-tabs__link">
+          
+  
+  
+  Tutorial
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../developers/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Developer Guides
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="FORCE AI" class="md-nav__button md-logo" aria-label="FORCE AI" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    FORCE AI
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/NCKU-AISLAB/force-ai" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    aislab/force-ai
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../quick-start/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Quick Start
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Tutorial
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Tutorial
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lab1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Lab 1 - AI Model Design and Quantization
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lab2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Lab 2 - Performance Modeling
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Lab 3 - Hardware Architecture Design
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    Lab 3 - Hardware Architecture Design
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      Overview
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eyeriss" class="md-nav__link">
+    <span class="md-ellipsis">
+      Eyeriss
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#post-processing-unit" class="md-nav__link">
+    <span class="md-ellipsis">
+      Post Processing Unit
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Post Processing Unit">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quantization" class="md-nav__link">
+    <span class="md-ellipsis">
+      Quantization
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#relu" class="md-nav__link">
+    <span class="md-ellipsis">
+      ReLU
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#maxpool" class="md-nav__link">
+    <span class="md-ellipsis">
+      MaxPool
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hardware-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      Hardware Architecture
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Hardware Architecture">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#controller" class="md-nav__link">
+    <span class="md-ellipsis">
+      Controller
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#glb-memory-usage-calculation" class="md-nav__link">
+    <span class="md-ellipsis">
+      GLB Memory Usage Calculation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#axi-protocol" class="md-nav__link">
+    <span class="md-ellipsis">
+      AXI Protocol
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dma-direct-memory-access" class="md-nav__link">
+    <span class="md-ellipsis">
+      DMA (Direct Memory Access)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#practice" class="md-nav__link">
+    <span class="md-ellipsis">
+      Practice
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Practice">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#data-transfer-by-handshake" class="md-nav__link">
+    <span class="md-ellipsis">
+      Data Transfer by Handshake
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#eyeriss-pe-array" class="md-nav__link">
+    <span class="md-ellipsis">
+      Eyeriss PE Array
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#post-processing-unit_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Post Processing Unit
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lab4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Lab 4 - Runtime and Performance Profiling
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lab5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Lab 5 - AI Compiler
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../developers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Developer Guides
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      Overview
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eyeriss" class="md-nav__link">
+    <span class="md-ellipsis">
+      Eyeriss
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#post-processing-unit" class="md-nav__link">
+    <span class="md-ellipsis">
+      Post Processing Unit
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Post Processing Unit">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quantization" class="md-nav__link">
+    <span class="md-ellipsis">
+      Quantization
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#relu" class="md-nav__link">
+    <span class="md-ellipsis">
+      ReLU
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#maxpool" class="md-nav__link">
+    <span class="md-ellipsis">
+      MaxPool
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hardware-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      Hardware Architecture
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Hardware Architecture">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#controller" class="md-nav__link">
+    <span class="md-ellipsis">
+      Controller
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#glb-memory-usage-calculation" class="md-nav__link">
+    <span class="md-ellipsis">
+      GLB Memory Usage Calculation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#axi-protocol" class="md-nav__link">
+    <span class="md-ellipsis">
+      AXI Protocol
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dma-direct-memory-access" class="md-nav__link">
+    <span class="md-ellipsis">
+      DMA (Direct Memory Access)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#practice" class="md-nav__link">
+    <span class="md-ellipsis">
+      Practice
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Practice">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#data-transfer-by-handshake" class="md-nav__link">
+    <span class="md-ellipsis">
+      Data Transfer by Handshake
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#eyeriss-pe-array" class="md-nav__link">
+    <span class="md-ellipsis">
+      Eyeriss PE Array
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#post-processing-unit_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Post Processing Unit
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="lab-3-hardware-architecture-design">Lab 3 - Hardware Architecture Design</h1>
+<h2 id="overview">Overview</h2>
+<p>In this lab, we will design an accelerator based on the Eyeriss paper. The goal is to implement the hardware architecture required to efficiently compute the VGG-8 model designed in Lab 1.</p>
+<p><img alt="image" src="../../assets/images/Hyd3aH9KJg.png" /></p>
+<p>This includes key operations such as <code>2D Convolution</code> fused with <code>BatchNorm2D</code>, <code>Linear</code>, <code>ReLU</code>, <code>MaxPool</code>, and <code>Post-Quantization</code>.</p>
+<p>We will fuse <code>BatchNorm2d</code> into <code>Conv2D</code> during the software stage.</p>
+<p>For <code>Conv2D</code> computation, we will design an Eyeriss-based PE array to support <code>3×3</code> convolution operations.</p>
+<p>Additionally, we will design a Post Processing Unit to handle <code>Maxpool</code>, <code>ReLU</code>, and <code>PostQuant</code> (We define post-quantization as the process where the quantized values are dequantized, processed, and then requantized, effectively outputting the ofmap).</p>
+<p>However, in Lab3, the <code>linear</code> operation will not be implemented.</p>
+<p>Students can try to think about how to fine-tune the Eyeriss architecture so that the PE array can also support linear operations. This contribution could serve as a breakthrough for the final project.</p>
+<h2 id="eyeriss">Eyeriss</h2>
+<p>In Lab 3, we will design our accelerator based on the Eyeriss paper.</p>
+<iframe width="800" height="450" src="https://www.youtube.com/embed/slPuqc3f45o" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+<h2 id="post-processing-unit">Post Processing Unit</h2>
+<p>Besides <code>Conv2D</code> fused with <code>BatchNorm2D</code> and <code>linear</code> operations,
+we still need to calculate <code>ReLU</code> and <code>MaxPool</code> operations.</p>
+<p>We also need to perform post-quantized
+- Dequantize and requantize the activations
+- Dequantize the weight</p>
+<h3 id="quantization">Quantization</h3>
+<h4 id="quantization-method">Quantization Method</h4>
+<p>In order to simplify the hardware implementation, we use <strong>layerwise symmetric uniform quantization</strong> for all layers in Lab 1.</p>
+<blockquote>
+<p>Refer to Lab1 HackMD for more details if unfamiliar with this quantization method.</p>
+</blockquote>
+<p>Here are the data types for inputs, weights, biases, outputs, and partial sums:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;"></th>
+<th style="text-align: center;">input/output activation</th>
+<th style="text-align: center;">weight</th>
+<th style="text-align: center;">bias/psum</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">Data type</td>
+<td style="text-align: center;">uint8</td>
+<td style="text-align: center;">int8</td>
+<td style="text-align: center;">int32</td>
+</tr>
+</tbody>
+</table>
+<p>Note that:
+1.  The scaling factor of bias is the product of input's scale and weight's scale.
+2.  The rounding method is truncation instead of round-to-nearest.</p>
+<h4 id="quantization_1">Quantization</h4>
+<div class="arithmatex">\[
+\tag{1}
+\begin{align}
+\bar x &amp;= \text{clamp} \left( \left\lfloor \frac{x}{s_x} \right\rceil + 128, 0, 255 \right) \in \mathbb{Z}_\text{uint8}^{\dim(x)} \\
+\bar w &amp;= \text{clamp} \left( \left\lfloor \frac{w}{s_w} \right\rceil, -128, 127 \right) \in \mathbb{Z}_\text{int8}^{\dim(w)} \\
+\bar b &amp;= \text{clamp} \left( \left\lfloor \frac{b}{s_x s_w} \right\rfloor, -2^{31}, 2^{31}-1 \right) \in \mathbb{Z}_\text{int32}^{\dim(b)} \\
+\bar y &amp;= \text{clamp} \left( \left\lfloor \frac{y}{s_y} \right\rceil + 128, 0, 255 \right) \in \mathbb{Z}_\text{uint8}^{\dim(y)}
+\end{align}
+\]</div>
+<blockquote>
+<p>The notation <span class="arithmatex">\(\mathbb{Z}^N\)</span> denotes a vector space of dimension <span class="arithmatex">\(N\)</span>
+where all elements (or components) are integers. See also <a href="https://en.wikipedia.org/wiki/Cartesian_product">Cartesian product</a>.</p>
+</blockquote>
+<p>where the scaling factors are calaulated by</p>
+<div class="arithmatex">\[
+\tag{2}
+\begin{align}
+s_x = \frac{2 \max(|x_\min|, |x_\max|)|}{255} \in \mathbb{R}_\text{float32} \\
+s_w = \frac{2 \max(|w_\min|, |w_\max|)|}{255} \in \mathbb{R}_\text{float32} \\
+s_y = \frac{2 \max(|y_\min|, |y_\max|)}{255} \in \mathbb{R}_\text{float32}
+\end{align}
+\]</div>
+<h4 id="dequantization">Dequantization</h4>
+<p>The original values can be approximated by dequantizing the quantized numbers.</p>
+<div class="arithmatex">\[
+\tag{3}
+\begin{align}
+x &amp;\approx s_x (\bar x - 128) \\
+w &amp;\approx s_w \bar w \\
+b &amp;\approx s_x s_w \bar b \\
+y &amp;\approx s_y (\bar y - 128)
+\end{align}
+\]</div>
+<h4 id="quantized-computation-operations">Quantized Computation Operations</h4>
+<p>Quantized computation operations require <strong>dequantization</strong> of inputs to a higher-precision representation before performing arithmetic computations. Once the operations are completed, the results are <strong>requantized</strong> to restore them to the quantized format, ensuring that the output remains compatible as the input for the next layer, allowing seamless execution of subsequent computations.</p>
+<p>To enable hardware to perform computations directly on quantized bits, we <mark>factor out the scaling factor</mark> using the following mathematical transformation. This yields an equivalent expression where the scaling factor can be uniformly applied during post-processing, allowing computations to be carried out in <code>int8</code> format.</p>
+<h5 id="quantized-scalar-multiplication">Quantized Scalar Multiplication</h5>
+<p>With <span class="arithmatex">\(\dim(x) = \dim(w) = \dim(y) = 1\)</span> in Eq. 1, multiplication between two quantized numbers are:</p>
+<div class="arithmatex">\[
+y = x \cdot w
+\]</div>
+<div class="arithmatex">\[
+s_y (\bar y - 128) = s_x (\bar x - 128) \cdot s_w \bar w
+\]</div>
+<div class="arithmatex">\[
+\bar y = \text{clanmp} \left( \frac{s_x s_w}{s_y} (\bar x - 128) \bar w + 128 , 0, 255\right)
+\]</div>
+<h5 id="quantized-matrix-multiplication">Quantized Matrix Multiplication</h5>
+<div class="arithmatex">\[
+y_i = b_i + \sum_j x_j \cdot w_{ji}
+\]</div>
+<p>can be approximated as the following using Eq. 3</p>
+<div class="arithmatex">\[
+\begin{align}
+s_y (\bar y_i - 128) &amp;= s_x s_w \bar b_i + \sum_j s_x (\bar x_j - 128) \cdot s_w \bar w_{ji} \\
+&amp;= s_x s_w (\bar b_i + \sum_j (\bar x_j - 128) \cdot \bar w_{ji})
+\end{align}
+\]</div>
+<p>then we get</p>
+<div class="arithmatex">\[
+\tag{4}
+\bar y_i = \text{clamp} \left( \frac{s_x s_w}{s_y} (\bar b_i + \sum_j (\bar x_j - 128) \cdot \bar w_{ji}) + 128, 0, 255 \right)
+\]</div>
+<h5 id="quantized-linear-layer">Quantized Linear Layer</h5>
+<div class="arithmatex">\[
+y_i = b_i + \sum_j x_j \cdot w_{ji}
+\]</div>
+<div class="arithmatex">\[
+s_y (\bar y_i - 128) = s_x s_w (\bar b_i + \sum_j (\bar x_j - 128) \cdot \bar w_{ji})
+\]</div>
+<div class="arithmatex">\[
+\tag{5}
+\bar y_i = \text{clamp} \left(
+\underbrace{
+    \frac{s_x s_w}{s_y}
+    \overbrace{
+        (\bar b_i + \sum_j (\bar x_j - 128) \cdot \bar w_{ji})
+    }^{\text{only int32 operations}}}_{\text{float32 operations involved}
+} + 128, 0, 255 \right)
+\]</div>
+<h5 id="quantized-convolution-layer">Quantized Convolution Layer</h5>
+<div class="arithmatex">\[
+y_{m,~e,~f} = b_{m} + \sum_c \sum_r \sum_s x_{c,~Ue+r,~Uf+s} \cdot w_{m,~c,~r,~s}^T
+\]</div>
+<div class="arithmatex">\[
+\tag{6}
+\bar y_{m,~e,~f} = \text{clamp} \left(
+\underbrace{
+    \frac{s_x s_w}{s_y}
+    \overbrace{
+        (\bar b_m + \sum_{c,~r,~s} (\bar x_{c,~Ue+r,~Uf+s} - 128) \cdot \bar w_{m,~c,~r,~s}^T)
+    }^{\text{only int32 operations}}}_{\text{float32 operations involved}
+} + 128 , 0, 255\right)
+\]</div>
+<h4 id="hardware-friendly-quantization-design">Hardware-Friendly Quantization Design</h4>
+<h5 id="power-of-two-approximation-for-scaling-factors">Power-of-Two Approximation for Scaling Factors</h5>
+<p>We use dyadic quantization method in Lab1, so that we get the scaling factor:</p>
+<div class="arithmatex">\[
+s \approx \frac{b}{2^c} \text{ , where } b, c \in \mathbb{Z}
+\]</div>
+<p>With <span class="arithmatex">\(b = 1\)</span> in dyadic quantization, we further get power-of-two quantization:</p>
+<div class="arithmatex">\[
+s \approx \frac{1}{2^c} = 2^{-c} \text{ , where } c \in \mathbb{Z}
+\]</div>
+<p>The quantized convolution operation can be approximated as:</p>
+<div class="arithmatex">\[
+\tag{7}
+\bar y_{m,~e,~f} = \left(
+    (\bar b_m + \sum_{c,~r,~s} (\bar x_{c,~Ue+r,~Uf+s} - 128) \cdot \bar w_{m,~c,~r,~s}^T)
+        \gg \frac{s_x s_w}{s_y} \right) + 128
+\]</div>
+<h5 id="efficient-handling-for-zero-points">Efficient Handling for Zero Points</h5>
+<div class="arithmatex">\[
+128 = 1000\_0000_2
+\]</div>
+<p>Adding or subtracting 128 is equivalent to toggling the most significant bit (MSB) of an 8-bit unsigned integer, which can also be achieved by XORing 128 with that integer.</p>
+<div class="arithmatex">\[
+\begin{align}
+\bar x_j - 128 &amp;= \bar x_j \oplus 128 = \{\sim \bar x[7],\ \bar x[6:0]\} \\
+\bar y_j + 128 &amp;= \bar y_j \oplus 128 = \{\sim \bar y[7],\ \bar y[6:0]\}
+\end{align}
+\]</div>
+<div class="arithmatex">\[
+\text{where} \oplus \text{is the bitwise XOR operation.}
+\]</div>
+<p>The matrix multiplication can be further expressed as:</p>
+<div class="arithmatex">\[
+\tag{8}
+\bar y_{m,~e,~f} = \text{clanmp} \left[ \left( \left(
+    (\bar b_m + \sum_{c,~r,~s} (\bar x_{c,~Ue+r,~Uf+s} \oplus 128) \cdot \bar w_{m,~c,~r,~s}^T)
+        \gg \frac{s_x s_w}{s_y} \right) \oplus 128 \right) ,0 , 255\right]
+\]</div>
+<h3 id="relu">ReLU</h3>
+<p>ReLU is an abbreviation for Rectified Linear Unit.
+$$
+\operatorname{ReLU} = \max(0, x)
+$$</p>
+<p>ReLU is the most commonly used <strong>nonlinear activation function</strong> in CNNs due to its computational efficiency, ability to mitigate the vanishing gradient problem, and promotion of sparsity in network activations.</p>
+<p>Unlike sigmoid<sup>[1]</sup>  or tanh<sup>[2]</sup>, ReLU involves only a simple thresholding operation, significantly reducing computational complexity. Its non-saturating property enables effective gradient propagation in deep networks, facilitating faster convergence. Additionally, ReLU induces sparsity by setting negative activations to zero, enhancing feature selectivity and regularization.
+See <a href="https://zh.wikipedia.org/zh-tw/%E7%BA%BF%E6%80%A7%E6%95%B4%E6%B5%81%E5%87%BD%E6%95%B0">ReLU's wikipedia</a> for more details.</p>
+<h4 id="note">Note</h4>
+<h4 id="1-sigmoid-function">[1] sigmoid function</h4>
+<p>It is a smooth, S-shaped function that maps any real-valued input to the range <span class="arithmatex">\((0,1)\)</span>.
+The sigmoid function is particularly useful for probabilistic interpretations, as its output can be interpreted as a probability. It remains widely used in binary classification tasks and as a gating function in architectures such as LSTMs.
+$$
+\sigma = \frac{1}{1+e^{-x}}
+$$</p>
+<h5 id="2-tanh-function">[2] tanh function</h5>
+<p>The hyperbolic tangent function <code>tanh</code> is a smooth, S-shaped function that maps any real-valued input to the range  <span class="arithmatex">\((−1,1)\)</span>.
+The function is odd-symmetric <span class="arithmatex">\(tanh(−x)=−tanh(x)\)</span> and exhibits asymptotic behavior, approaching -1 as <span class="arithmatex">\(x \rightarrow -\infty\)</span> and 1 as <span class="arithmatex">\(x \rightarrow \infty\)</span>. Unlike the sigmoid function, <code>tanh(x)</code> is <strong>zero-centered</strong>, meaning that its output is centered around 0, which often facilitates faster convergence in deep learning applications.
+Due to its saturating properties,  <code>tanh(x)</code> is prone to vanishing gradient issues when used in deep networks. Nevertheless, it remains widely employed in neural networks, particularly in recurrent architectures such as LSTMs and GRUs, where it serves as an activation function in hidden state updates.
+$$
+\tanh(x) = \frac{e^x - e<sup>{-x}}{e</sup>x + e^{-x}}
+$$</p>
+<h3 id="maxpool">MaxPool</h3>
+<p>Max pooling is a widely used downsampling operation in CNNs
+that reduces spatial dimensions while retaining the most salient features. It is defined as:</p>
+<div class="arithmatex">\[
+y_{i,j} = \max_{(m,n) \in R_{i,j}} x_{m,n}
+\]</div>
+<p>where <span class="arithmatex">\(R_{i,j}\)</span> represents the receptive field (e.g., a <span class="arithmatex">\(k\times k\)</span> region), and <span class="arithmatex">\(x_{m,n}\)</span> are the input values within this region. Max pooling preserves the strongest activations by selecting the maximum value in each window, enhancing translational invariance and improving computational efficiency. It is commonly applied with a <span class="arithmatex">\(2 \times 2\)</span> window and a stride of 2, reducing feature map size while mitigating overfitting. However, it may discard finer details, making it less suitable for tasks requiring precise spatial information.</p>
+<p>for example:</p>
+<div class="arithmatex">\[
+X =
+\begin{bmatrix}
+1 &amp; 3 &amp; 2 &amp; 1 \\
+4 &amp; 8 &amp; 6 &amp; 2 \\
+3 &amp; 5 &amp; 7 &amp; 9 \\
+2 &amp; 4 &amp; 6 &amp; 8 \\
+\end{bmatrix}
+\]</div>
+<p>Resulting pooled output:</p>
+<div class="arithmatex">\[
+Y =
+\begin{bmatrix}
+8 &amp; 6 \\
+5 &amp; 9 \\
+\end{bmatrix}
+\]</div>
+<h2 id="hardware-architecture">Hardware Architecture</h2>
+<p><img alt="image" src="../../assets/images/Hk4PcsK9ye.png" /></p>
+<h3 id="controller">Controller</h3>
+<p>The Controller in Eyeriss acts as the central unit that orchestrates the entire execution process. It ensures that different modules operate in a synchronized manner and that the correct data is processed at the right time. The key responsibilities of the Controller include:</p>
+<h4 id="logic-control">Logic Control</h4>
+<p>Managing the overall execution sequence of the hardware.</p>
+<h4 id="module-activation">Module Activation</h4>
+<p>Deciding when each module, such as the Processing Element (PE) Array and Post-Processing Unit (PPU), should start execution.</p>
+<h4 id="data-routing">Data Routing</h4>
+<p>Controlling the movement of data between memory, processing elements, and post-processing units.</p>
+<p>Assigning Tag IDs to allow data to be multicast to multiple designated PEs, ensuring that shared data is efficiently distributed across the array.</p>
+<h4 id="glb-data-management">GLB Data Management</h4>
+<ul>
+<li>Determining which data should be swapped in and out of GLB.</li>
+<li>Ensuring efficient data reuse by preloading required feature maps, weights, and intermediate results.</li>
+<li>Managing data transfer between external DRAM and GLB, optimizing memory bandwidth utilization.</li>
+</ul>
+<h3 id="glb-memory-usage-calculation">GLB Memory Usage Calculation</h3>
+<p>Calculation Order: NCHW</p>
+<div class="arithmatex">\[
+\text{ifmap usage} = 1 * (q * r) * (e + R - 1) * (F + S - 1) * \text{1 byte}
+\]</div>
+<div class="arithmatex">\[
+\text{filter usage} = (p * t) * (q * r) * R * S* \text{1 byte}
+\]</div>
+<div class="arithmatex">\[
+\text{bias usage} = (p * t) * \text{4 byte}
+\]</div>
+<div class="arithmatex">\[
+\text{opsum usage} = 1 * m * e * F
+\]</div>
+<div class="arithmatex">\[
+\text{GLB total size} = 64 \text{ KiB}
+\]</div>
+<div class="arithmatex">\[
+\tag{9}
+\text{GLB total size} \le \text{ifmap usage} + \text{filter usage} + \text{bias usage} + \text{opsum usage}
+\]</div>
+<p>Among these parameters, <code>p, q, r, t, e, R, S, F, GLB total size</code> are constants, allowing <code>m</code> to be calculated using Equation (9).</p>
+<h3 id="axi-protocol">AXI Protocol</h3>
+<h4 id="mmio-memory-mapped-io">MMIO (Memory-Mapped I/O)</h4>
+<p>Memory-Mapped I/O (MMIO) is a common mechanism in ASIC and embedded system design that allows peripherals to be accessed using standard memory read and write instructions.</p>
+<p>In MMIO, <strong>peripheral registers are mapped to specific memory addresses</strong>, enabling the CPU to interact with devices such as DMA controllers, AI accelerators, and communication interfaces through load/store operations instead of special I/O instructions.</p>
+<p>This approach simplifies hardware design, improves data transfer efficiency. MMIO transactions are typically non-cacheable to ensure real-time data consistency, and memory barriers may be required to enforce execution order. This method is widely used in high-performance SoC architectures, where CPUs configure peripherals by writing to control registers, while peripherals report status and events through MMIO reads.</p>
+<h5 id="memory-mapped-io-vs-port-mapped-io">Memory-Mapped I/O v.s Port-Mapped I/O</h5>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>MMIO</th>
+<th>PMIO</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Access Method</td>
+<td>Uses standard load/store instructions</td>
+<td>Uses dedicated I/O instructions</td>
+</tr>
+<tr>
+<td>Address Space</td>
+<td>Shares the same memory address space as RAM</td>
+<td>Uses a separate I/O address space</td>
+</tr>
+<tr>
+<td>Performance</td>
+<td>Faster</td>
+<td>Slower</td>
+</tr>
+<tr>
+<td>Use Cases</td>
+<td>DMA, AI Accelerator, GPU</td>
+<td>UART</td>
+</tr>
+</tbody>
+</table>
+<h4 id="axi-protocol_1">AXI Protocol</h4>
+<h5 id="introduction">Introduction</h5>
+<p>The AXI (Advanced eXtensible Interface) Protocol is a high-performance communication protocol within ARM's AMBA (Advanced Microcontroller Bus Architecture), widely used in SoC (System on Chip) designs to facilitate efficient data transfer between processors, memory controllers, and peripherals.</p>
+<h5 id="five-independent-channels">Five Independent Channels</h5>
+<p>AXI operates with five independent channels enabling simultaneous read and write transactions for improved performance.
+- AR (Address Read)
+- R (Read Data)
+- AW (Address Write)
+- W (Write Data)
+- and B (Write Response)</p>
+<h5 id="brust-mode">Brust Mode</h5>
+<p>The protocol supports burst-based transactions, allowing multiple data transfers per request, and offers three burst types: Fixed, Incrementing, and Wrapping, optimizing memory access efficiency. Key features include support for unaligned data transfers, separate read/write channels, and optional out-of-order execution.</p>
+<h5 id="ready-valid-handshake">Ready-Valid Handshake</h5>
+<p>The protocol uses handshake signals (VALID and READY) to synchronize data flow, ensuring reliable communication.</p>
+<h5 id="conclusion">Conclusion</h5>
+<p>AXI is highly scalable, supporting data widths from 32-bit to 512-bit, making it ideal for processor-memory interactions, DMA transfers, AI accelerators, GPUs, and FPGA designs. Its low-latency, high-throughput, and flexible nature makes it a preferred choice in modern embedded and high-performance computing systems.</p>
+<h3 id="dma-direct-memory-access">DMA (Direct Memory Access)</h3>
+<p>In ASIC design, the DMA directly writes data to the GLB (Global Buffer), providing efficient and low-latency memory access to optimize the data flow for local computation resources.</p>
+<p>This architecture is commonly used in AI accelerators, image processors, and deep learning inference engines, ensuring that compute units can stably retrieve data and enhance computational efficiency.</p>
+<p>The DMA controller supports high-throughput data transfer and accelerates data movement using AXI Burst Mode.</p>
+<p>Additionally, since the data is quantized to 8-bit, a specialized memory ordering is required when storing data in the GLB. Therefore, the DMA supports two modes for handling 8-bit and 32-bit data transfers separately.</p>
+<p>For more details, see the <a href="https://zh.wikipedia.org/zh-tw/直接記憶體存取">Wikipedia</a></p>
+<h2 id="practice">Practice</h2>
+<h3 id="data-transfer-by-handshake">Data Transfer by Handshake</h3>
+<h4 id="what-is-handshake">What is Handshake?</h4>
+<p>A handshake is a fundamental mechanism used in digital communication to ensure reliable data transfer between two parties. It establishes synchronization between the sender and receiver, ensuring that data is transmitted only when both sides are ready. Handshaking protocols are widely used in computer networks, peripheral interfaces, and bus protocols such as <code>AXI</code>, <code>SPI</code>, and <code>I²C</code>.</p>
+<p>In a typical handshake, control signals are exchanged between the sender and receiver before actual data transmission. This prevents data loss, ensures flow control, and optimizes system efficiency.</p>
+<h4 id="ready-valid-handshake-common-in-axi-protocols">Ready-Valid Handshake (Common in AXI Protocols):</h4>
+<p><img alt="image" src="../../assets/images/rJBnV4P91e.png" />
+- A widely used mechanism in hardware interfaces where the sender asserts a valid signal when data is available, and the receiver asserts a ready signal when it is ready to consume the data.
+- The transaction is completed when both valid and ready signals are asserted simultaneously.
+- In this lab, we use this for our handshake mechanism
+- For more details, please visit <a href="https://vhdlwhiz.com/how-the-axi-style-ready-valid-handshake-works/">this website</a>.</p>
+<h3 id="eyeriss-pe-array">Eyeriss PE Array</h3>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>You have to use <code>generate</code> block to generate PE, X-Bus, Y-Bus, MC.</p>
+</div>
+<p>These are the shape parameters and mapping parameters defined by Eyeriss. They will be used directly in the following sections, so students must familiarize themselves with them to better understand the document.</p>
+<p><strong>Shape Parameter</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Parameter</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">N</td>
+<td>batch size of 3D fmaps</td>
+</tr>
+<tr>
+<td style="text-align: center;">M</td>
+<td># of 3D filters / # of ofmap channels</td>
+</tr>
+<tr>
+<td style="text-align: center;">C</td>
+<td># of ifmap/filter channels</td>
+</tr>
+<tr>
+<td style="text-align: center;">H/W</td>
+<td>ifmap plane height/width</td>
+</tr>
+<tr>
+<td style="text-align: center;">R/S</td>
+<td>filter plane height/width</td>
+</tr>
+<tr>
+<td style="text-align: center;">E/F</td>
+<td>ofmap plane height/width</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Mapping Parameter</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Parameter</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">m</td>
+<td>number of ofmap channels stored in the GLB</td>
+</tr>
+<tr>
+<td style="text-align: center;">n</td>
+<td>number of ifmaps used in a processing pass</td>
+</tr>
+<tr>
+<td style="text-align: center;">e</td>
+<td>width fo the PE set</td>
+</tr>
+<tr>
+<td style="text-align: center;">p</td>
+<td>number of filters processed by a PE set</td>
+</tr>
+<tr>
+<td style="text-align: center;">q</td>
+<td>number of channels processed by a PE set</td>
+</tr>
+<tr>
+<td style="text-align: center;">r</td>
+<td>number of PE sets that process different channels in the PE array</td>
+</tr>
+<tr>
+<td style="text-align: center;">t</td>
+<td>number of PE sets that process different filters in the PE array</td>
+</tr>
+</tbody>
+</table>
+<h4 id="testbench-guildline">Testbench Guildline</h4>
+<ul>
+<li>
+<p>The testbench for this lab is written using <strong>Verilator</strong>.
+  For a detailed tutorial on Verilator, please refer to the <strong>Lab 0.4 HackMD</strong> handout.</p>
+</li>
+<li>
+<p>This testbench requires two additional files:</p>
+</li>
+<li>
+<p><strong>define.svh</strong> <code>./include/define.svh</code>
+    This file contains <strong>macro definitions</strong> and is included during Verilator compilation, making the defined macros directly accessible.
+    If you need to add more macro definitions, you can modify this file accordingly.</p>
+</li>
+<li>
+<p><strong>config.h</strong> <code>./testbench/config_*.h</code>
+    This file stores information about each test case, including test parameters and data locations, allowing the testbench to read the necessary data and perform complete computations.</p>
+</li>
+<li>
+<p>After running the simulation, you can obtain the waveform file at the following path <code>/wave/*.vcd</code> .
+    &gt; Refer to the Lab 0.4 Verilator Tutorial for instructions on how to open and inspect the waveform file to verify your design.</p>
+</li>
+</ul>
+<h4 id="pe">PE</h4>
+<h5 id="load-ifmap">Load Ifmap</h5>
+<p>When loading the ifmap, you must first subtract the zero-point.
+Since we use uint8 symmetric quantization, the zero-point is 128
+For details, refer to the <a href="/2025sp/lab1">Lab1 HackMD handout</a>.</p>
+<p><strong>You should adopt a more hardware-friendly approach to replace this subtraction</strong>.
+<strong>Otherwise, points may be deducted accordingly.</strong></p>
+<h5 id="activation-of-pe">Activation of PE</h5>
+<p>The PE computes a 1-D convolution primitive. The PE waits for the testbench to assert <code>PE_en</code>. Once <code>PE_en</code> is high, <code>PE_config</code> becomes valid, and the PE reads its contents to determine the information for the current 1-D convolution computation. Afterward, the testbench starts sending and retrieving data through a handshake mechanism. The process continues until the computation is complete.</p>
+<p>The following is the definition of <code>PE_config</code></p>
+<!--digraph {
+    rankdir="LR"
+    node [shape=record];
+    bits [label="{
+
+        {{9}|mode} |
+        {{8|7}|p-1} |
+        {{6|5|4|3|2}|F-1} |
+        {{1|0}|q-1}
+    }"];
+}-->
+
+<p><img src="../../assets/svgs/lab3_graphviz_0.svg" alt="graphviz_0"></p>
+<p><code>mode = 0</code> means <code>CONV</code>
+<code>mode = 1</code> means <code>FC Layer</code></p>
+<h5 id="io-ports">I/O ports</h5>
+<div class="language-verilog highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">module</span><span class="w"> </span><span class="n">PE</span><span class="w"> </span><span class="p">(</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">    </span><span class="k">input</span><span class="w"> </span><span class="n">clk</span><span class="p">,</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">    </span><span class="k">input</span><span class="w"> </span><span class="n">rst</span><span class="p">,</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">    </span><span class="k">input</span><span class="w"> </span><span class="n">PE_en</span><span class="p">,</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">    </span><span class="k">input</span><span class="w"> </span><span class="p">[</span><span class="no">`CONFIG_SIZE</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w"> </span><span class="n">i_config</span><span class="p">,</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">    </span><span class="k">input</span><span class="w"> </span><span class="p">[</span><span class="no">`DATA_BITS</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w"> </span><span class="n">ifmap</span><span class="p">,</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">    </span><span class="k">input</span><span class="w"> </span><span class="p">[</span><span class="no">`DATA_BITS</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w"> </span><span class="n">filter</span><span class="p">,</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">    </span><span class="k">input</span><span class="w"> </span><span class="p">[</span><span class="no">`DATA_BITS</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w"> </span><span class="n">ipsum</span><span class="p">,</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="w">    </span><span class="k">input</span><span class="w"> </span><span class="n">ifmap_valid</span><span class="p">,</span>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="w">    </span><span class="k">input</span><span class="w"> </span><span class="n">filter_valid</span><span class="p">,</span>
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="w">    </span><span class="k">input</span><span class="w"> </span><span class="n">ipsum_valid</span><span class="p">,</span>
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="w">    </span><span class="k">input</span><span class="w"> </span><span class="n">opsum_ready</span><span class="p">,</span>
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="w">    </span><span class="k">output</span><span class="w"> </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="no">`DATA_BITS</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w"> </span><span class="n">opsum</span><span class="p">,</span>
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="w">    </span><span class="k">output</span><span class="w"> </span><span class="kt">logic</span><span class="w"> </span><span class="n">ifmap_ready</span><span class="p">,</span>
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="w">    </span><span class="k">output</span><span class="w"> </span><span class="kt">logic</span><span class="w"> </span><span class="n">filter_ready</span><span class="p">,</span>
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="w">    </span><span class="k">output</span><span class="w"> </span><span class="kt">logic</span><span class="w"> </span><span class="n">ipsum_ready</span><span class="p">,</span>
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="w">    </span><span class="k">output</span><span class="w"> </span><span class="kt">logic</span><span class="w"> </span><span class="n">opsum_valid</span>
+</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="p">);</span>
+</span></code></pre></div>
+<h5 id="testbench-behavior">Testbench Behavior</h5>
+<p>If a 1-D convolution needs to be computed as shown below:</p>
+<!--{%speakerdeck yishuo0802/pe-testbench-data-order %}-->
+
+<iframe class="speakerdeck-iframe" frameborder="0" src="https://speakerdeck.com/player/fd0f9f0ea90742bea37f75d83e877edf" title="pe-testbench-data-order" allowfullscreen="true" style="border: 0px; background: padding-box rgba(0, 0, 0, 0.1); margin: 0px; padding: 0px; border-radius: 6px; box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 40px; width: 100%; height: auto; aspect-ratio: 560 / 315;" data-ratio="1.7777777777777777"></iframe>
+
+<h4 id="pe-array">PE Array</h4>
+<h5 id="io-ports_1">I/O ports</h5>
+<div class="language-verilog highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="k">module</span><span class="w"> </span><span class="n">PE_array</span><span class="w"> </span><span class="p">#(</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">    </span><span class="k">parameter</span><span class="w"> </span><span class="n">NUMS_PE_ROW</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="no">`NUMS_PE_ROW</span><span class="p">,</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">    </span><span class="k">parameter</span><span class="w"> </span><span class="n">NUMS_PE_COL</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="no">`NUMS_PE_COL</span><span class="p">,</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">    </span><span class="k">parameter</span><span class="w"> </span><span class="n">XID_BITS</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="no">`XID_BITS</span><span class="p">,</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">    </span><span class="k">parameter</span><span class="w"> </span><span class="n">YID_BITS</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="no">`YID_BITS</span><span class="p">,</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">    </span><span class="k">parameter</span><span class="w"> </span><span class="n">DATA_SIZE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="no">`DATA_BITS</span><span class="p">,</span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="w">    </span><span class="k">parameter</span><span class="w"> </span><span class="n">CONFIG_SIZE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="no">`CONFIG_SIZE</span>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="p">)(</span>
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="w">    </span><span class="k">input</span><span class="w"> </span><span class="n">clk</span><span class="p">,</span>
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="w">    </span><span class="k">input</span><span class="w"> </span><span class="n">rst</span><span class="p">,</span>
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="w">    </span><span class="cm">/* Scan Chain */</span>
+</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="w">    </span><span class="k">input</span><span class="w"> </span><span class="n">set_XID</span><span class="p">,</span>
+</span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="w">    </span><span class="k">input</span><span class="w"> </span><span class="p">[</span><span class="no">`XID_BITS</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w"> </span><span class="n">ifmap_XID_scan_in</span><span class="p">,</span>
+</span><span id="__span-1-15"><a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a><span class="w">    </span><span class="k">input</span><span class="w"> </span><span class="p">[</span><span class="no">`XID_BITS</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w"> </span><span class="n">filter_XID_scan_in</span><span class="p">,</span>
+</span><span id="__span-1-16"><a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a><span class="w">    </span><span class="k">input</span><span class="w"> </span><span class="p">[</span><span class="no">`XID_BITS</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w"> </span><span class="n">ipsum_XID_scan_in</span><span class="p">,</span>
+</span><span id="__span-1-17"><a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a><span class="w">    </span><span class="k">input</span><span class="w"> </span><span class="p">[</span><span class="no">`XID_BITS</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w"> </span><span class="n">opsum_XID_scan_in</span><span class="p">,</span>
+</span><span id="__span-1-18"><a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a><span class="w">    </span><span class="c1">// output [XID_BITS-1:0] XID_scan_out,</span>
+</span><span id="__span-1-19"><a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a>
+</span><span id="__span-1-20"><a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a><span class="w">    </span><span class="k">input</span><span class="w"> </span><span class="n">set_YID</span><span class="p">,</span>
+</span><span id="__span-1-21"><a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a><span class="w">    </span><span class="k">input</span><span class="w"> </span><span class="p">[</span><span class="no">`YID_BITS</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w"> </span><span class="n">ifmap_YID_scan_in</span><span class="p">,</span>
+</span><span id="__span-1-22"><a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a><span class="w">    </span><span class="k">input</span><span class="w"> </span><span class="p">[</span><span class="no">`YID_BITS</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w"> </span><span class="n">filter_YID_scan_in</span><span class="p">,</span>
+</span><span id="__span-1-23"><a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a><span class="w">    </span><span class="k">input</span><span class="w"> </span><span class="p">[</span><span class="no">`YID_BITS</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w"> </span><span class="n">ipsum_YID_scan_in</span><span class="p">,</span>
+</span><span id="__span-1-24"><a id="__codelineno-1-24" name="__codelineno-1-24" href="#__codelineno-1-24"></a><span class="w">    </span><span class="k">input</span><span class="w"> </span><span class="p">[</span><span class="no">`YID_BITS</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w"> </span><span class="n">opsum_YID_scan_in</span><span class="p">,</span>
+</span><span id="__span-1-25"><a id="__codelineno-1-25" name="__codelineno-1-25" href="#__codelineno-1-25"></a><span class="w">    </span><span class="c1">// output logic [YID_BITS-1:0] YID_scan_out,</span>
+</span><span id="__span-1-26"><a id="__codelineno-1-26" name="__codelineno-1-26" href="#__codelineno-1-26"></a>
+</span><span id="__span-1-27"><a id="__codelineno-1-27" name="__codelineno-1-27" href="#__codelineno-1-27"></a><span class="w">    </span><span class="k">input</span><span class="w"> </span><span class="n">set_LN</span><span class="p">,</span>
+</span><span id="__span-1-28"><a id="__codelineno-1-28" name="__codelineno-1-28" href="#__codelineno-1-28"></a><span class="w">    </span><span class="k">input</span><span class="w"> </span><span class="p">[</span><span class="no">`NUMS_PE_ROW</span><span class="o">-</span><span class="mh">2</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w"> </span><span class="n">LN_config_in</span><span class="p">,</span>
+</span><span id="__span-1-29"><a id="__codelineno-1-29" name="__codelineno-1-29" href="#__codelineno-1-29"></a>
+</span><span id="__span-1-30"><a id="__codelineno-1-30" name="__codelineno-1-30" href="#__codelineno-1-30"></a><span class="w">    </span><span class="cm">/* Controller */</span>
+</span><span id="__span-1-31"><a id="__codelineno-1-31" name="__codelineno-1-31" href="#__codelineno-1-31"></a><span class="w">    </span><span class="k">input</span><span class="w"> </span><span class="p">[</span><span class="no">`NUMS_PE_ROW</span><span class="o">*</span><span class="no">`NUMS_PE_COL</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w"> </span><span class="n">PE_en</span><span class="p">,</span>
+</span><span id="__span-1-32"><a id="__codelineno-1-32" name="__codelineno-1-32" href="#__codelineno-1-32"></a><span class="w">    </span><span class="k">input</span><span class="w"> </span><span class="p">[</span><span class="no">`CONFIG_SIZE</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w"> </span><span class="n">PE_config</span><span class="p">,</span>
+</span><span id="__span-1-33"><a id="__codelineno-1-33" name="__codelineno-1-33" href="#__codelineno-1-33"></a><span class="w">    </span><span class="k">input</span><span class="w"> </span><span class="p">[</span><span class="no">`XID_BITS</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w"> </span><span class="n">ifmap_tag_X</span><span class="p">,</span>
+</span><span id="__span-1-34"><a id="__codelineno-1-34" name="__codelineno-1-34" href="#__codelineno-1-34"></a><span class="w">    </span><span class="k">input</span><span class="w"> </span><span class="p">[</span><span class="no">`YID_BITS</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w"> </span><span class="n">ifmap_tag_Y</span><span class="p">,</span>
+</span><span id="__span-1-35"><a id="__codelineno-1-35" name="__codelineno-1-35" href="#__codelineno-1-35"></a><span class="w">    </span><span class="k">input</span><span class="w"> </span><span class="p">[</span><span class="no">`XID_BITS</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w"> </span><span class="n">filter_tag_X</span><span class="p">,</span>
+</span><span id="__span-1-36"><a id="__codelineno-1-36" name="__codelineno-1-36" href="#__codelineno-1-36"></a><span class="w">    </span><span class="k">input</span><span class="w"> </span><span class="p">[</span><span class="no">`YID_BITS</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w"> </span><span class="n">filter_tag_Y</span><span class="p">,</span>
+</span><span id="__span-1-37"><a id="__codelineno-1-37" name="__codelineno-1-37" href="#__codelineno-1-37"></a><span class="w">    </span><span class="k">input</span><span class="w"> </span><span class="p">[</span><span class="no">`XID_BITS</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w"> </span><span class="n">ipsum_tag_X</span><span class="p">,</span>
+</span><span id="__span-1-38"><a id="__codelineno-1-38" name="__codelineno-1-38" href="#__codelineno-1-38"></a><span class="w">    </span><span class="k">input</span><span class="w"> </span><span class="p">[</span><span class="no">`YID_BITS</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w"> </span><span class="n">ipsum_tag_Y</span><span class="p">,</span>
+</span><span id="__span-1-39"><a id="__codelineno-1-39" name="__codelineno-1-39" href="#__codelineno-1-39"></a><span class="w">    </span><span class="k">input</span><span class="w"> </span><span class="p">[</span><span class="no">`XID_BITS</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w"> </span><span class="n">opsum_tag_X</span><span class="p">,</span>
+</span><span id="__span-1-40"><a id="__codelineno-1-40" name="__codelineno-1-40" href="#__codelineno-1-40"></a><span class="w">    </span><span class="k">input</span><span class="w"> </span><span class="p">[</span><span class="no">`YID_BITS</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w"> </span><span class="n">opsum_tag_Y</span><span class="p">,</span>
+</span><span id="__span-1-41"><a id="__codelineno-1-41" name="__codelineno-1-41" href="#__codelineno-1-41"></a>
+</span><span id="__span-1-42"><a id="__codelineno-1-42" name="__codelineno-1-42" href="#__codelineno-1-42"></a><span class="w">    </span><span class="cm">/* GLB */</span>
+</span><span id="__span-1-43"><a id="__codelineno-1-43" name="__codelineno-1-43" href="#__codelineno-1-43"></a><span class="w">    </span><span class="k">input</span><span class="w"> </span><span class="n">GLB_ifmap_valid</span><span class="p">,</span>
+</span><span id="__span-1-44"><a id="__codelineno-1-44" name="__codelineno-1-44" href="#__codelineno-1-44"></a><span class="w">    </span><span class="k">output</span><span class="w"> </span><span class="kt">logic</span><span class="w"> </span><span class="n">GLB_ifmap_ready</span><span class="p">,</span>
+</span><span id="__span-1-45"><a id="__codelineno-1-45" name="__codelineno-1-45" href="#__codelineno-1-45"></a><span class="w">    </span><span class="k">input</span><span class="w"> </span><span class="n">GLB_filter_valid</span><span class="p">,</span>
+</span><span id="__span-1-46"><a id="__codelineno-1-46" name="__codelineno-1-46" href="#__codelineno-1-46"></a><span class="w">    </span><span class="k">output</span><span class="w"> </span><span class="kt">logic</span><span class="w"> </span><span class="n">GLB_filter_ready</span><span class="p">,</span>
+</span><span id="__span-1-47"><a id="__codelineno-1-47" name="__codelineno-1-47" href="#__codelineno-1-47"></a><span class="w">    </span><span class="k">input</span><span class="w"> </span><span class="n">GLB_ipsum_valid</span><span class="p">,</span>
+</span><span id="__span-1-48"><a id="__codelineno-1-48" name="__codelineno-1-48" href="#__codelineno-1-48"></a><span class="w">    </span><span class="k">output</span><span class="w"> </span><span class="kt">logic</span><span class="w"> </span><span class="n">GLB_ipsum_ready</span><span class="p">,</span>
+</span><span id="__span-1-49"><a id="__codelineno-1-49" name="__codelineno-1-49" href="#__codelineno-1-49"></a><span class="w">    </span><span class="k">input</span><span class="w"> </span><span class="p">[</span><span class="n">DATA_SIZE</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w"> </span><span class="n">GLB_data_in</span><span class="p">,</span>
+</span><span id="__span-1-50"><a id="__codelineno-1-50" name="__codelineno-1-50" href="#__codelineno-1-50"></a>
+</span><span id="__span-1-51"><a id="__codelineno-1-51" name="__codelineno-1-51" href="#__codelineno-1-51"></a><span class="w">    </span><span class="k">output</span><span class="w"> </span><span class="kt">logic</span><span class="w"> </span><span class="n">GLB_opsum_valid</span><span class="p">,</span>
+</span><span id="__span-1-52"><a id="__codelineno-1-52" name="__codelineno-1-52" href="#__codelineno-1-52"></a><span class="w">    </span><span class="k">input</span><span class="w"> </span><span class="n">GLB_opsum_ready</span><span class="p">,</span>
+</span><span id="__span-1-53"><a id="__codelineno-1-53" name="__codelineno-1-53" href="#__codelineno-1-53"></a><span class="w">    </span><span class="k">output</span><span class="w"> </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="n">DATA_SIZE</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w"> </span><span class="n">GLB_data_out</span>
+</span><span id="__span-1-54"><a id="__codelineno-1-54" name="__codelineno-1-54" href="#__codelineno-1-54"></a>
+</span><span id="__span-1-55"><a id="__codelineno-1-55" name="__codelineno-1-55" href="#__codelineno-1-55"></a><span class="p">);</span>
+</span></code></pre></div>
+<h5 id="insturction">Insturction</h5>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>make pe%
+</span></code></pre></div>
+<h5 id="testbench-behavior_1">Testbench Behavior</h5>
+<p>If a 2-D convolution needs to be computed as shown below:</p>
+<!--{%speakerdeck yishuo0802/pe-array %}-->
+
+<iframe class="speakerdeck-iframe" frameborder="0" src="https://speakerdeck.com/player/99b4cc17533d4068a3a5a7d9722dc09b" title="pe-array" allowfullscreen="true" style="border: 0px; background: padding-box rgba(0, 0, 0, 0.1); margin: 0px; padding: 0px; border-radius: 6px; box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 40px; width: 100%; height: auto; aspect-ratio: 560 / 315;" data-ratio="1.7777777777777777"></iframe>
+
+<p>In addtion to PE array, you need to implement the following submodules to construct it.</p>
+<h4 id="gingon">GIN/GON</h4>
+<p><img alt="image" src="../../assets/images/SkhAoOoFkl.png" /></p>
+<h5 id="io-ports_2">I/O ports</h5>
+<div class="language-verilog highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="k">module</span><span class="w"> </span><span class="n">GIN</span><span class="w"> </span><span class="p">(</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">    </span><span class="k">input</span><span class="w"> </span><span class="n">clk</span><span class="p">,</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">    </span><span class="k">input</span><span class="w"> </span><span class="n">rst</span><span class="p">,</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">    </span><span class="c1">// Slave SRAM &lt;-&gt; GIN</span>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="w">    </span><span class="k">input</span><span class="w"> </span><span class="n">GIN_valid</span><span class="p">,</span>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="w">    </span><span class="k">output</span><span class="w"> </span><span class="kt">logic</span><span class="w"> </span><span class="n">GIN_ready</span><span class="p">,</span>
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="w">    </span><span class="k">input</span><span class="w"> </span><span class="p">[</span><span class="no">`DATA_BITS</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w"> </span><span class="n">GIN_data</span><span class="p">,</span>
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>
+</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="w">    </span><span class="cm">/* Controller &lt;-&gt; GIN */</span>
+</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="w">    </span><span class="k">input</span><span class="w"> </span><span class="p">[</span><span class="no">`XID_BITS</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w"> </span><span class="n">tag_X</span><span class="p">,</span>
+</span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a><span class="w">    </span><span class="k">input</span><span class="w"> </span><span class="p">[</span><span class="no">`YID_BITS</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w"> </span><span class="n">tag_Y</span><span class="p">,</span>
+</span><span id="__span-3-13"><a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a>
+</span><span id="__span-3-14"><a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a><span class="w">    </span><span class="cm">/* config */</span>
+</span><span id="__span-3-15"><a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a><span class="w">    </span><span class="k">input</span><span class="w"> </span><span class="n">set_XID</span><span class="p">,</span>
+</span><span id="__span-3-16"><a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a><span class="w">    </span><span class="k">input</span><span class="w"> </span><span class="p">[</span><span class="no">`XID_BITS</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w"> </span><span class="n">XID_scan_in</span><span class="p">,</span>
+</span><span id="__span-3-17"><a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a><span class="w">    </span><span class="k">input</span><span class="w"> </span><span class="n">set_YID</span><span class="p">,</span>
+</span><span id="__span-3-18"><a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a><span class="w">    </span><span class="k">input</span><span class="w"> </span><span class="p">[</span><span class="no">`YID_BITS</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w"> </span><span class="n">YID_scan_in</span><span class="p">,</span>
+</span><span id="__span-3-19"><a id="__codelineno-3-19" name="__codelineno-3-19" href="#__codelineno-3-19"></a>
+</span><span id="__span-3-20"><a id="__codelineno-3-20" name="__codelineno-3-20" href="#__codelineno-3-20"></a><span class="w">    </span><span class="c1">// Master GIN &lt;-&gt; PE</span>
+</span><span id="__span-3-21"><a id="__codelineno-3-21" name="__codelineno-3-21" href="#__codelineno-3-21"></a><span class="w">    </span><span class="k">input</span><span class="w"> </span><span class="p">[</span><span class="no">`NUMS_PE_ROW</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="no">`NUMS_PE_COL</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w"> </span><span class="n">PE_ready</span><span class="p">,</span>
+</span><span id="__span-3-22"><a id="__codelineno-3-22" name="__codelineno-3-22" href="#__codelineno-3-22"></a><span class="w">    </span><span class="k">output</span><span class="w"> </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="no">`NUMS_PE_ROW</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="no">`NUMS_PE_COL</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w"> </span><span class="n">PE_valid</span><span class="p">,</span>
+</span><span id="__span-3-23"><a id="__codelineno-3-23" name="__codelineno-3-23" href="#__codelineno-3-23"></a><span class="w">    </span><span class="k">output</span><span class="w"> </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="no">`DATA_BITS</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w"> </span><span class="n">PE_data</span>
+</span><span id="__span-3-24"><a id="__codelineno-3-24" name="__codelineno-3-24" href="#__codelineno-3-24"></a><span class="p">);</span>
+</span></code></pre></div>
+<h4 id="bus">Bus</h4>
+<h5 id="io-ports_3">I/O ports</h5>
+<div class="language-verilog highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="w"> </span><span class="k">module</span><span class="w"> </span><span class="n">GIN_Bus</span><span class="w"> </span><span class="p">#(</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">    </span><span class="k">parameter</span><span class="w"> </span><span class="n">NUMS_SLAVE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="no">`NUMS_PE_COL</span><span class="p">,</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">    </span><span class="k">parameter</span><span class="w"> </span><span class="n">ID_SIZE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="no">`XID_BITS</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="p">)</span><span class="w"> </span><span class="p">(</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="w">    </span><span class="k">input</span><span class="w"> </span><span class="n">clk</span><span class="p">,</span>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="w">    </span><span class="k">input</span><span class="w"> </span><span class="n">rst</span><span class="p">,</span>
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="w">   </span><span class="c1">// Master I/O</span>
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="w">    </span><span class="k">input</span><span class="w"> </span><span class="p">[</span><span class="n">ID_SIZE</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w"> </span><span class="n">tag</span><span class="p">,</span>
+</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="w">    </span><span class="k">input</span><span class="w"> </span><span class="n">master_valid</span><span class="p">,</span>
+</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="w">    </span><span class="k">input</span><span class="w"> </span><span class="p">[</span><span class="no">`DATA_BITS</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w"> </span><span class="n">master_data</span><span class="p">,</span>
+</span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="w">    </span><span class="k">output</span><span class="w"> </span><span class="kt">logic</span><span class="w"> </span><span class="n">master_ready</span><span class="p">,</span>
+</span><span id="__span-4-13"><a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a>
+</span><span id="__span-4-14"><a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a><span class="w">   </span><span class="c1">// Slave I/O</span>
+</span><span id="__span-4-15"><a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a><span class="w">    </span><span class="k">input</span><span class="w"> </span><span class="p">[</span><span class="n">NUMS_SLAVE</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w"> </span><span class="n">slave_ready</span><span class="p">,</span>
+</span><span id="__span-4-16"><a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a><span class="w">    </span><span class="k">output</span><span class="w"> </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="n">NUMS_SLAVE</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w"> </span><span class="n">slave_valid</span><span class="p">,</span>
+</span><span id="__span-4-17"><a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a><span class="w">    </span><span class="k">output</span><span class="w"> </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="no">`DATA_BITS</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w"> </span><span class="n">slave_data</span><span class="p">,</span>
+</span><span id="__span-4-18"><a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a>
+</span><span id="__span-4-19"><a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a><span class="w">    </span><span class="c1">// Config</span>
+</span><span id="__span-4-20"><a id="__codelineno-4-20" name="__codelineno-4-20" href="#__codelineno-4-20"></a><span class="w">    </span><span class="k">input</span><span class="w"> </span><span class="n">set_id</span><span class="p">,</span>
+</span><span id="__span-4-21"><a id="__codelineno-4-21" name="__codelineno-4-21" href="#__codelineno-4-21"></a><span class="w">    </span><span class="k">input</span><span class="w"> </span><span class="p">[</span><span class="n">ID_SIZE</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w"> </span><span class="n">ID_scan_in</span><span class="p">,</span>
+</span><span id="__span-4-22"><a id="__codelineno-4-22" name="__codelineno-4-22" href="#__codelineno-4-22"></a><span class="w">    </span><span class="k">output</span><span class="w"> </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="n">ID_SIZE</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w"> </span><span class="n">ID_scan_out</span>
+</span><span id="__span-4-23"><a id="__codelineno-4-23" name="__codelineno-4-23" href="#__codelineno-4-23"></a><span class="w"> </span><span class="p">);</span>
+</span></code></pre></div>
+<h4 id="multicast-controller">Multicast Controller</h4>
+<h5 id="io-ports_4">I/O ports</h5>
+<div class="language-verilog highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="k">module</span><span class="w"> </span><span class="n">GIN_MulticastController</span><span class="w"> </span><span class="p">#(</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">    </span><span class="k">parameter</span><span class="w"> </span><span class="n">ID_SIZE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="no">`XID_BITS</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">    </span><span class="p">)(</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">    </span><span class="k">input</span><span class="w"> </span><span class="n">clk</span><span class="p">,</span>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="w">    </span><span class="k">input</span><span class="w"> </span><span class="n">rst</span><span class="p">,</span>
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="w">    </span><span class="k">input</span><span class="w"> </span><span class="n">set_id</span><span class="p">,</span>
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="w">    </span><span class="k">input</span><span class="w"> </span><span class="p">[</span><span class="n">ID_SIZE</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w"> </span><span class="n">id_in</span><span class="p">,</span>
+</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="w">    </span><span class="k">output</span><span class="w"> </span><span class="kt">reg</span><span class="w"> </span><span class="p">[</span><span class="n">ID_SIZE</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w"> </span><span class="n">id</span><span class="p">,</span>
+</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>
+</span><span id="__span-5-11"><a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="w">    </span><span class="k">input</span><span class="w"> </span><span class="p">[</span><span class="n">ID_SIZE</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w"> </span><span class="n">tag</span><span class="p">,</span>
+</span><span id="__span-5-12"><a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>
+</span><span id="__span-5-13"><a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a><span class="w">    </span><span class="k">input</span><span class="w"> </span><span class="n">valid_in</span><span class="p">,</span>
+</span><span id="__span-5-14"><a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a><span class="w">    </span><span class="k">output</span><span class="w"> </span><span class="kt">logic</span><span class="w"> </span><span class="n">valid_out</span><span class="p">,</span>
+</span><span id="__span-5-15"><a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a><span class="w">    </span><span class="k">input</span><span class="w"> </span><span class="n">ready_in</span><span class="p">,</span>
+</span><span id="__span-5-16"><a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a><span class="w">    </span><span class="k">output</span><span class="w"> </span><span class="kt">logic</span><span class="w"> </span><span class="n">ready_out</span>
+</span><span id="__span-5-17"><a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a><span class="p">);</span>
+</span></code></pre></div>
+<h4 id="testbench-behavior_2">Testbench Behavior</h4>
+<p>The following slides illustrate how the testbench sends the config ID to the bus.</p>
+<!--{%speakerdeck yishuo0802/network %}-->
+
+<iframe class="speakerdeck-iframe" frameborder="0" src="https://speakerdeck.com/player/f9615a97015349468e4f57e381d7057c" title="network" allowfullscreen="true" style="border: 0px; background: padding-box rgba(0, 0, 0, 0.1); margin: 0px; padding: 0px; border-radius: 6px; box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 40px; width: 100%; height: auto; aspect-ratio: 560 / 315;" data-ratio="1.7777777777777777"></iframe>
+
+<h4 id="instruction">Instruction</h4>
+<p>There are six testbenches for different mapping parameter.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">para</th>
+<th style="text-align: center;">array0</th>
+<th style="text-align: center;">array1</th>
+<th style="text-align: center;">array2</th>
+<th style="text-align: center;">array3</th>
+<th style="text-align: center;">array4</th>
+<th style="text-align: center;">array5</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">F</td>
+<td style="text-align: center;">16</td>
+<td style="text-align: center;">32</td>
+<td style="text-align: center;">16</td>
+<td style="text-align: center;">16</td>
+<td style="text-align: center;">16</td>
+<td style="text-align: center;">16</td>
+</tr>
+<tr>
+<td style="text-align: center;">e</td>
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">16</td>
+</tr>
+<tr>
+<td style="text-align: center;">p</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">4</td>
+</tr>
+<tr>
+<td style="text-align: center;">q</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">4</td>
+</tr>
+<tr>
+<td style="text-align: center;">r</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+</tr>
+<tr>
+<td style="text-align: center;">t</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">1</td>
+</tr>
+</tbody>
+</table>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>make array%
+</span></code></pre></div>
+<h3 id="post-processing-unit_1">Post Processing Unit</h3>
+<p>In the post-processing unit (PPU), you must implement three operations: <code>PostQuant</code>, <code>ReLU</code>, and <code>MaxPool</code>. Whether <code>MaxPool</code> needs to be computed depends on <code>maxpool_en</code>.</p>
+<p>You can think of the PPU as an always-on module.</p>
+<h4 id="postquant">PostQuant</h4>
+<h5 id="scaling-factor">Scaling Factor</h5>
+<p>Based on the result calculated in (8), we know that Quantized Convolution can be equivalently expressed by this equation.</p>
+<p>If <span class="arithmatex">\(\frac{s_x \times s_w}{sy} = 2^n\)</span> the testbench will send the integer value <code>n</code> to the module.</p>
+<h5 id="zero-point">Zero Point</h5>
+<p>Opposite to the PE operation, when requantizing to uint8, you need to add the zero-point.</p>
+<p>Similarly, you cannot use an adder for this operation; instead, you must adopt a more hardware-friendly approach.</p>
+<p><strong>Otherwise, points may be deducted accordingly.</strong></p>
+<h5 id="clamping">Clamping</h5>
+<p>In post-quantization, after scaling and zero-point adjustment, the output values may exceed the valid range for<code>uint8</code> (i.e., <code>0</code> to <code>255</code>). Therefore, clamping is necessary to ensure that the final output remains within the acceptable range.</p>
+<div class="arithmatex">\[
+x = \text{clamp} \left( x, 0, 255 \right)
+\]</div>
+<p>To implement hardware-friendly clamping, we <strong>avoid using explicit comparators or conditional branches</strong>, as they introduce extra logic and may increase latency. Instead, we leverage <strong>bitwise operation</strong> that are more suitable for synthesis in hardware.</p>
+<h4 id="maxpool_1">Maxpool</h4>
+<ul>
+<li>MaxPool is required
+the testbench will provide the first data sample when maxpool_init is asserted, followed by three additional data samples in consecutive cycles. The testbench will then read the output data in the next cycle.</li>
+<li>MaxPool is not required
+the testbench will read the output data in the cycle following the data input.</li>
+</ul>
+<p><img alt="image" src="../../assets/images/rJfmA399Jx.png" /></p>
+<h4 id="io-ports_5">I/O ports</h4>
+<div class="language-verilog highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="k">module</span><span class="w"> </span><span class="n">PPU</span><span class="w"> </span><span class="p">(</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">    </span><span class="k">input</span><span class="w"> </span><span class="n">clk</span><span class="p">,</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">    </span><span class="k">input</span><span class="w"> </span><span class="n">rst</span><span class="p">,</span>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="w">    </span><span class="k">input</span><span class="w"> </span><span class="p">[</span><span class="no">`DATA_BITS</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w"> </span><span class="n">data_in</span><span class="p">,</span>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="w">    </span><span class="k">input</span><span class="w"> </span><span class="p">[</span><span class="mh">5</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w"> </span><span class="n">scaling_factor</span><span class="p">,</span>
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="w">    </span><span class="k">input</span><span class="w"> </span><span class="n">maxpool_en</span><span class="p">,</span>
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="w">    </span><span class="k">input</span><span class="w"> </span><span class="n">maxpool_init</span><span class="p">,</span>
+</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="w">    </span><span class="k">input</span><span class="w"> </span><span class="n">relu_sel</span><span class="p">,</span>
+</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="w">    </span><span class="k">input</span><span class="w"> </span><span class="n">relu_en</span><span class="p">,</span>
+</span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="w">    </span><span class="k">output</span><span class="w"> </span><span class="kt">logic</span><span class="p">[</span><span class="mh">7</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w"> </span><span class="n">data_out</span>
+</span><span id="__span-7-11"><a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a><span class="p">);</span>
+</span></code></pre></div>
+<blockquote>
+<p><code>relu_sel</code> select whether to output the data from <code>post_quant</code> or <code>from max_pool</code>
+<code>*_en</code>  indicates whether the submodule is enabled.</p>
+</blockquote>
+<h4 id="instruction_1">Instruction</h4>
+<p>There are three testbenches.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>make ppu%
+</span></code></pre></div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../lab2/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Lab 2 - Performance Modeling">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Lab 2 - Performance Modeling
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../lab4/" class="md-footer__link md-footer__link--next" aria-label="Next: Lab 4 - Runtime and Performance Profiling">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Lab 4 - Runtime and Performance Profiling
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/NCKU-AISLAB/force-ai" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.path", "navigation.top", "navigation.footer", "content.code.copy", "content.code.select", "content.code.annotate"], "search": "../../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.13a4f30d.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/gh/rod2ik/cdn@main/mkdocs/javascripts/mkdocs-graphviz.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,2102 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../../quick-start/">
+      
+      
+        <link rel="next" href="../lab2/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.14">
+    
+    
+      
+        <title>Lab 1 - AI Model Design and Quantization - FORCE AI</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.342714a4.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="cyan" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#lab-1-ai-model-design-and-quantization" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="FORCE AI" class="md-header__button md-logo" aria-label="FORCE AI" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            FORCE AI
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Lab 1 - AI Model Design and Quantization
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="cyan" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+      <div class="md-header__option">
+  <div class="md-select">
+    
+    <button class="md-header__button md-icon" aria-label="Select language">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12.87 15.07-2.54-2.51.03-.03A17.5 17.5 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2zm-2.62 7 1.62-4.33L19.12 17z"/></svg>
+    </button>
+    <div class="md-select__inner">
+      <ul class="md-select__list">
+        
+          <li class="md-select__item">
+            <a href="./" hreflang="en" class="md-select__link">
+              English
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="../../zh/2025sp/lab1/" hreflang="zh" class="md-select__link">
+              繁體中文
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</div>
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/NCKU-AISLAB/force-ai" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    aislab/force-ai
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../quick-start/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Quick Start
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="./" class="md-tabs__link">
+          
+  
+  
+  Tutorial
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../developers/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Developer Guides
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="FORCE AI" class="md-nav__button md-logo" aria-label="FORCE AI" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    FORCE AI
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/NCKU-AISLAB/force-ai" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    aislab/force-ai
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../quick-start/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Quick Start
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Tutorial
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Tutorial
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Lab 1 - AI Model Design and Quantization
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    Lab 1 - AI Model Design and Quantization
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#lab-11-ai-model-design" class="md-nav__link">
+    <span class="md-ellipsis">
+      Lab 1.1 - AI Model Design
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Lab 1.1 - AI Model Design">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-targeting-task-and-dataset" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Targeting Task and Dataset
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-model-architecture-design" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Model Architecture Design
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-model-training-and-hyperparameter-tuning" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Model Training and Hyperparameter Tuning
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lab-12-ai-model-quantization" class="md-nav__link">
+    <span class="md-ellipsis">
+      Lab 1.2 - AI Model Quantization
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Lab 1.2 - AI Model Quantization">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#why-quantization" class="md-nav__link">
+    <span class="md-ellipsis">
+      Why Quantization?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#number-representation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Number Representation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hardware-energyarea-cost-on-different-numeric-operation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Hardware Energy/Area Cost on Different Numeric Operation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quantization-schemes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Quantization Schemes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#symmetricasymmetric" class="md-nav__link">
+    <span class="md-ellipsis">
+      Symmetric/Asymmetric
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#clipping-range" class="md-nav__link">
+    <span class="md-ellipsis">
+      Clipping Range
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reduced-rangefull-range" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reduced Range/Full Range
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#calibration-algorithms" class="md-nav__link">
+    <span class="md-ellipsis">
+      Calibration Algorithms
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ptqqat" class="md-nav__link">
+    <span class="md-ellipsis">
+      PTQ/QAT
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quantization-errors" class="md-nav__link">
+    <span class="md-ellipsis">
+      Quantization Errors
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fake-quantizationinteger-only-quantization" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fake Quantization/Integer-only Quantization
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hardware-friendly-design" class="md-nav__link">
+    <span class="md-ellipsis">
+      Hardware-Friendly Design
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#derivation-of-quantized-mac" class="md-nav__link">
+    <span class="md-ellipsis">
+      Derivation of Quantized MAC
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#derivation-of-batch-normalization-folding" class="md-nav__link">
+    <span class="md-ellipsis">
+      Derivation of Batch Normalization Folding
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quantization-in-practice" class="md-nav__link">
+    <span class="md-ellipsis">
+      Quantization in Practice
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reference
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#practice" class="md-nav__link">
+    <span class="md-ellipsis">
+      Practice
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Practice">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-train-a-vgg-like-model-using-cifar-10-dataset" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Train a VGG-like Model using CIFAR-10 dataset.
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-quantize-the-vgg-like-model-as-int8-precision" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Quantize the VGG-like Model as INT8 Precision
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lab2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Lab 2 - Performance Modeling
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lab3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Lab 3 - Hardware Architecture Design
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lab4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Lab 4 - Runtime and Performance Profiling
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lab5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Lab 5 - AI Compiler
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../developers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Developer Guides
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#lab-11-ai-model-design" class="md-nav__link">
+    <span class="md-ellipsis">
+      Lab 1.1 - AI Model Design
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Lab 1.1 - AI Model Design">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-targeting-task-and-dataset" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Targeting Task and Dataset
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-model-architecture-design" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Model Architecture Design
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-model-training-and-hyperparameter-tuning" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Model Training and Hyperparameter Tuning
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lab-12-ai-model-quantization" class="md-nav__link">
+    <span class="md-ellipsis">
+      Lab 1.2 - AI Model Quantization
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Lab 1.2 - AI Model Quantization">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#why-quantization" class="md-nav__link">
+    <span class="md-ellipsis">
+      Why Quantization?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#number-representation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Number Representation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hardware-energyarea-cost-on-different-numeric-operation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Hardware Energy/Area Cost on Different Numeric Operation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quantization-schemes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Quantization Schemes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#symmetricasymmetric" class="md-nav__link">
+    <span class="md-ellipsis">
+      Symmetric/Asymmetric
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#clipping-range" class="md-nav__link">
+    <span class="md-ellipsis">
+      Clipping Range
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reduced-rangefull-range" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reduced Range/Full Range
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#calibration-algorithms" class="md-nav__link">
+    <span class="md-ellipsis">
+      Calibration Algorithms
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ptqqat" class="md-nav__link">
+    <span class="md-ellipsis">
+      PTQ/QAT
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quantization-errors" class="md-nav__link">
+    <span class="md-ellipsis">
+      Quantization Errors
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fake-quantizationinteger-only-quantization" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fake Quantization/Integer-only Quantization
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hardware-friendly-design" class="md-nav__link">
+    <span class="md-ellipsis">
+      Hardware-Friendly Design
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#derivation-of-quantized-mac" class="md-nav__link">
+    <span class="md-ellipsis">
+      Derivation of Quantized MAC
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#derivation-of-batch-normalization-folding" class="md-nav__link">
+    <span class="md-ellipsis">
+      Derivation of Batch Normalization Folding
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quantization-in-practice" class="md-nav__link">
+    <span class="md-ellipsis">
+      Quantization in Practice
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reference
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#practice" class="md-nav__link">
+    <span class="md-ellipsis">
+      Practice
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Practice">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-train-a-vgg-like-model-using-cifar-10-dataset" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Train a VGG-like Model using CIFAR-10 dataset.
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-quantize-the-vgg-like-model-as-int8-precision" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Quantize the VGG-like Model as INT8 Precision
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="lab-1-ai-model-design-and-quantization">Lab 1 - AI Model Design and Quantization</h1>
+<h2 id="lab-11-ai-model-design">Lab 1.1 - AI Model Design</h2>
+<h3 id="1-targeting-task-and-dataset">1. Targeting Task and Dataset</h3>
+<p>In the labs of this course, we will perform an image classification task on the CIFAR-10 dataset. CIFAR-10 consists of 60,000 colored images (32×32 pixels, RGB channels) across 10 classes: airplane, automobile, bird, cat, deer, dog, frog, horse, ship, and truck. It is split into 50,000 training and 10,000 test images.</p>
+<p>Many convolutional neural networks (CNNs) have been evaluated on CIFAR-10, making it a valuable dataset for learning image classification techniques.</p>
+<h3 id="2-model-architecture-design">2. Model Architecture Design</h3>
+<p>Below, we introduce several commonly used operators in convolutional neural networks (CNNs). In the assignment of this lab, you will be asked to design your own model architecture using these operators and apply it to the CIFAR-10 image classification task.</p>
+<p>In the following formulas, we present:</p>
+<div class="arithmatex">\[
+\begin{align}
+N &amp;= \text{batch size} \\
+C_{\text{in}} &amp;= \text{number of input channels} \\
+C_{\text{out}} &amp;= \text{number of output channels} \\
+H &amp;= \text{height of the tensor} \\
+W &amp;= \text{width of the tensor}
+\end{align}
+\]</div>
+<h4 id="convolution">Convolution</h4>
+<p>Convolutions are widely used for <strong>feature extraction</strong> in computer vision tasks. A convolution operator can defined by its size, stride, padding, dilation, etc.</p>
+<p><img alt="image" src="../../assets/images/rkcOj22Kkl.png" /></p>
+<p>Here is the mathematical representation:</p>
+<div class="arithmatex">\[
+\begin{align}
+\text{out}(N_i, C_{\text{out}, j}) &amp;= \text{bias}(C_{\text{out}, j}) + \sum_{k=0}^{C_{\text{in}}-1} \text{weight}(C_{\text{out}, j}, k) \star \text{input}(N_i, k) \\
+\end{align}
+\]</div>
+<p>In AlexNet, 11×11, 5×5, and 3×3 Conv2D layers are used. However, using multiple convolution kernel sizes in a model increases the complexity of hardware implementation. Therefore, in this lab, we will use <strong>only 3×3 Conv2D with a padding size of 1 and a stride of 1</strong>, following the approach in VGGNet. With these settings, the spatial dimensions of the output feature map will remain the same as those of the input feature map.</p>
+<h4 id="linear">Linear</h4>
+<p>Fully-connected layers, also known as linear layers or dense layers, connect every input neuron to every output neuron and are commonly used as the <strong>classifier</strong> in a neural network.</p>
+<p><img alt="image" src="../../assets/images/HJzUi2hFyg.png" /></p>
+<div class="arithmatex">\[
+\mathbf{y} = \mathbf{x} \mathbf{W}^{T} + \mathbf{b}
+\]</div>
+<h4 id="rectified-linear-unit-relu">Rectified Linear Unit (ReLU)</h4>
+<p>ReLU is an activation function, which sets all negative values to zero while keeping positive values unchanged. It introduces non-linearity to the model, helping neural networks learn complex patterns while mitigating the vanishing gradient problem compared to other activation functions like sigmoid, hyperbolic tangent, etc.</p>
+<p><img alt="image" src="../../assets/images/HyJ5SCEt1x.png" /> {width=75%}</p>
+<div class="arithmatex">\[
+\operatorname{ReLU}(x) = \cases{
+0 \text{, if } x &lt; 0 \\
+x \text{, otherwise}
+}
+\]</div>
+<h4 id="max-pooling">Max Pooling</h4>
+<p>Max pooling is a downsampling operation commonly used in convolutional neural networks (CNNs) to reduce the spatial dimensions of feature maps while preserving important features. In the following formulas, we present the typical 2D max pooling operation.</p>
+<p><img alt="image" src="../../assets/images/rJxBvN22FJg.png" /> {width=80%}</p>
+<div class="arithmatex">\[
+out(N_i, C_j, h, w) =
+\max\limits_{m=0,\dots,k_H-1}
+\max\limits_{n=0,\dots,k_W-1}
+\text{input}(N_i, C_j, \text{stride}[0] \times h + m, \text{stride}[1] \times w + n)
+\]</div>
+<h4 id="batch-normalization">Batch Normalization</h4>
+<p>Batch Normalization (BN) is a technique used in deep learning to stabilize and accelerate training by normalizing the inputs of each layer. It reduces internal covariate shift, making optimization more efficient.</p>
+<div class="arithmatex">\[
+\begin{align}
+y &amp;= \frac{x - \mathbb{E}[x]}{\sqrt{\text{Var}[x] + \epsilon}} \cdot \gamma + \beta \\
+\text{where} \\
+\mathbb{E}[\cdot] &amp;= \text{"the mean"} \\
+\text{Var}[\cdot] &amp;= \text{"the variance"} \\
+\gamma, \beta &amp;= \text{"learnable parameters"} \in \mathbb{R}^{C_\text{out}} \\
+\epsilon &amp;= \text{"small constant to avoid division by zero"} \\
+\end{align}
+\]</div>
+<p>The learnable parameters <span class="arithmatex">\(\gamma\)</span> and <span class="arithmatex">\(\beta\)</span> are updated during training but remains fixed during inference.</p>
+<ol>
+<li>During forward propagation of training: the mean and variance are calculated from the current mini-batch.</li>
+<li>During backward propagation of training: <span class="arithmatex">\(\gamma\)</span> and <span class="arithmatex">\(\beta\)</span> are updated with the gradients <span class="arithmatex">\(\frac{\partial L}{\partial \gamma}\)</span> and <span class="arithmatex">\(\frac{\partial L}{\partial \beta}\)</span> respectively</li>
+<li>During inference: <span class="arithmatex">\(\gamma\)</span> and <span class="arithmatex">\(\beta\)</span> are fixed</li>
+</ol>
+<p>As the following figure shows, the <strong>batch normalization are applied per channel</strong>. That is, the mean and variance are computed over all elements in the batch (<span class="arithmatex">\(N\)</span>) and spatial dimension (<span class="arithmatex">\(H\)</span> and <span class="arithmatex">\(W\)</span>). Each channel has independent <span class="arithmatex">\(\gamma_c\)</span> and <span class="arithmatex">\(\beta_c\)</span> parameters.</p>
+<p><img alt="image" src="../../assets/images/By-I803Y1g.png" /></p>
+<h3 id="3-model-training-and-hyperparameter-tuning">3. Model Training and Hyperparameter Tuning</h3>
+<p>You can use these techniques to improve the accuracy and efficiency of model training.
+- <a href="https://pytorch.org/docs/stable/optim.html">Learning Rate Scheduling and Optimizer</a>
+- <a href="https://pytorch.org/docs/stable/nn.init.html#torch.nn.init.kaiming_normal_">Weight Initialization</a>
+- Regularization (<a href="https://pytorch.org/docs/stable/generated/torch.nn.L1Loss.html">L1</a>, <a href="https://pytorch.org/docs/stable/generated/torch.nn.functional.normalize.html">L2</a>)
+- <a href="https://pytorch.org/docs/stable/generated/torch.nn.Softmax.html">Softmax</a> and <a href="https://pytorch.org/docs/stable/generated/torch.nn.CrossEntropyLoss.html">Cross Entropy Loss</a>
+    - They are commonly used in image classification tasks.</p>
+<h2 id="lab-12-ai-model-quantization">Lab 1.2 - AI Model Quantization</h2>
+<h3 id="why-quantization">Why Quantization?</h3>
+<p>In the beginning, we need to discuss the different data types that can be used for computation and their associated hardware costs.</p>
+<h3 id="number-representation">Number Representation</h3>
+<h4 id="integers">Integers</h4>
+<table>
+<thead>
+<tr>
+<th>Integer Format</th>
+<th>Length (bit)</th>
+<th style="text-align: left;">Value Range</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>INT32</strong></td>
+<td>32</td>
+<td style="text-align: left;">-2,147,483,648 ~ 2,147,483,647</td>
+</tr>
+<tr>
+<td><strong>UINT32</strong></td>
+<td>32</td>
+<td style="text-align: left;">0 ~ 4,294,967,295</td>
+</tr>
+<tr>
+<td><strong>INT16</strong></td>
+<td>16</td>
+<td style="text-align: left;">-32768 ~ 32767</td>
+</tr>
+<tr>
+<td><strong>UINT16</strong></td>
+<td>16</td>
+<td style="text-align: left;">0 ~ 65535</td>
+</tr>
+<tr>
+<td><strong>INT8</strong></td>
+<td>8</td>
+<td style="text-align: left;">-128 ~ 127</td>
+</tr>
+<tr>
+<td><strong>UINT8</strong></td>
+<td>8</td>
+<td style="text-align: left;">0 ~ 255</td>
+</tr>
+</tbody>
+</table>
+<h4 id="floating-point-numbers">Floating Point Numbers</h4>
+<table>
+<thead>
+<tr>
+<th>Floating Point Format</th>
+<th>Length (bits)</th>
+<th>Exponent (E)</th>
+<th>Mantissa (M)</th>
+<th>Applications</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>FP64</strong></td>
+<td>64</td>
+<td>11</td>
+<td>52</td>
+<td>High precision computing, scientific simulations</td>
+</tr>
+<tr>
+<td><strong>FP32</strong></td>
+<td>32</td>
+<td>8</td>
+<td>23</td>
+<td>General computing, 3D rendering, machine learning</td>
+</tr>
+<tr>
+<td><strong>TF32</strong></td>
+<td>32</td>
+<td>8</td>
+<td>10</td>
+<td>NVIDIA proposed, AI training acceleration</td>
+</tr>
+<tr>
+<td><strong>FP16</strong></td>
+<td>16</td>
+<td>5</td>
+<td>10</td>
+<td>Low-power AI training and inference</td>
+</tr>
+<tr>
+<td><strong>BF16</strong></td>
+<td>16</td>
+<td>8</td>
+<td>7</td>
+<td>AI training, better compatibility with FP32</td>
+</tr>
+<tr>
+<td><strong>FP8-E4M3</strong></td>
+<td>8</td>
+<td>4</td>
+<td>3</td>
+<td>Low-precision AI inference</td>
+</tr>
+<tr>
+<td><strong>FP8-E5M2</strong></td>
+<td>8</td>
+<td>5</td>
+<td>2</td>
+<td>Low-precision AI inference</td>
+</tr>
+</tbody>
+</table>
+<h3 id="hardware-energyarea-cost-on-different-numeric-operation">Hardware Energy/Area Cost on Different Numeric Operation</h3>
+<p><img alt="image" src="../../assets/images/BkaAOS7O1e.png" /></p>
+<blockquote>
+<h5 id="floating-point-arithmetic-is-more-computationally-expensive-due-to-the-overhead-of-mantissa-alignment-and-mantissa-multiplications"><strong>Floating-point</strong> arithmetic is more computationally expensive due to the overhead of <strong><em>mantissa alignment</em></strong> and <strong><em>mantissa multiplications</em></strong></h5>
+</blockquote>
+<ul>
+<li>When training a model in Python, we often use FP32 precision in default, as it provides a good performance and accuracy. However, we can observe that FP32 comes with a significant computational cost, making it less efficient in terms of hardware usage and power consumption.</li>
+<li>To reduce hardware costs (size of storage and computation), we can apply <strong>quantization</strong>, which converts high-precision numbers (e.g. FP32) into lower-precision formats (e.g. INT8).</li>
+</ul>
+<h3 id="quantization-schemes">Quantization Schemes</h3>
+<ul>
+<li>In the previous discussion, we introduced various data type formats and observed that high-precision computations are computationally expensive. To reduce this cost, we can apply quantization, reducing hardware complexity and improving efficiency.</li>
+<li>In this section, we will guide you through different <strong>quantization schemes</strong>, and delve into the <strong>calibration</strong> implementation. By the end, you will have a clear understanding of how to effectively apply PTQ to optimize model performance while maintaining accuracy.</li>
+</ul>
+<h4 id="uniformnon-uniform">Uniform/Non-uniform</h4>
+<h5 id="uniform-quantization-linear-quantization">Uniform Quantization (Linear Quantization)</h5>
+<ul>
+<li>Uniform quantization maps input values to equally spaced discrete levels.
+<img alt="image" src="../../assets/images/ryhkkin_ke.png" /></li>
+</ul>
+<div class="arithmatex">\[
+\begin{align}
+q &amp;= \mathbf{Q}(r) = \text{clip}(\left\lfloor \frac{r}{s} \right\rceil + z, q_\min, q_\max) \\
+r &amp;\approx \mathbf{D}(q) = s(q - z)  \\
+\\
+\text{where} \\
+\mathbf{Q} &amp;= \text{"the quantization operator"}\\
+\mathbf{D} &amp;= \text{"the de-quantization operator"}\\
+q &amp;= \text{"quantized value"}\\
+r &amp;= \text{"real value"}\\
+s &amp;= \text{"the real difference between quantized steps"} \in \mathbb{R} \\
+z &amp;= \text{"the quantized value mapping to real number 0"} \in \mathbb{Z}
+\end{align}
+\]</div>
+<p>The precise definition of the <strong>scaling factor <span class="arithmatex">\(s\)</span></strong> and <strong>zero point <span class="arithmatex">\(z\)</span></strong> varies with which quantization scheme is utilzed.</p>
+<h4 id="non-uniform-quantization-logarithmicpower-of-2-quantization">Non-Uniform Quantization (Logarithmic/power-of-2 Quantization)</h4>
+<ul>
+<li>Non-uniform quantization maps input value to varying step sizes.
+<img alt="image" src="../../assets/images/SyGGyjhdJl.png" /></li>
+</ul>
+<div class="arithmatex">\[
+\begin{align}
+q &amp;= \mathbf{Q}(r) = \text{sign}(r) \cdot \text{clip}(\left\lfloor -\log_2{\frac{|r|}{s}} \right\rceil + z, q_\min, q_\max) \\
+r &amp;\approx \mathbf{D}(q) = s \cdot 2^{z-q}
+\end{align}
+\]</div>
+<h3 id="symmetricasymmetric">Symmetric/Asymmetric</h3>
+<h4 id="asymmetricaffine-uniform-quantiztaion">Asymmetric/Affine Uniform Quantiztaion</h4>
+<ul>
+<li>
+<p>Asymmetric quantization allows a nonzero zero point to better represent skewed data distributions at the cost of additional processing.
+<img alt="image" src="../../assets/images/HkCaA92O1x.png" /></p>
+</li>
+<li>
+<p>asymmetric: <span class="arithmatex">\(\beta \ne -\alpha\)</span></p>
+</li>
+</ul>
+<div class="arithmatex">\[
+\begin{align}
+s &amp;= \frac{\beta - \alpha}{q_\max - q_\min} \in \mathbb{R} \\
+z &amp;= q_\min - \left\lfloor \frac{\alpha}{s} \right\rceil \in \mathbb{Z}
+\end{align}
+\]</div>
+<h4 id="symmetric-uniform-quantiztaion">Symmetric Uniform Quantiztaion</h4>
+<ul>
+<li>
+<p>Symmetric quantization uses a zero-centered scale for positive and negative values
+<img alt="image" src="../../assets/images/SJRnCchdkx.png" /></p>
+</li>
+<li>
+<p>symmetric: <span class="arithmatex">\(\beta = -\alpha\)</span></p>
+</li>
+</ul>
+<div class="arithmatex">\[
+\begin{align}
+s &amp;= \frac{2 \max(|\alpha|, |\beta|)}{q_\max - q_\min} \in \mathbb{R} \\
+z &amp;= \left\lceil \frac{q_\max + q_\min}{2} \right\rceil =
+\begin{cases}
+0 \text{, if signed} \\
+128 \text{, if unsigned}
+\end{cases} \in \mathbb{Z}
+\end{align}
+\]</div>
+<h4 id="comparison">Comparison</h4>
+<p>Compared to asymmetric quantization, <strong>symmetric quantization is more hardware-friendly</strong>, which eliminates the cross terms of quantized matrix multiplication</p>
+<ol>
+<li><strong>Faster Matrix Multiplication</strong>
+With <strong>symmetric quantization</strong>, all data is scaled using the same factor, and the zero-point is set to <strong>0</strong>. This allows direct execution of integer-only operations:
+$$
+\begin{align}
+C_q &amp;= A_q \times B_q
+\end{align}
+$$
+In contrast, with <strong>asymmetric quantization</strong>, matrix multiplication becomes more complex because the zero-point must be accounted for:
+$$
+\begin{align}
+C_q &amp;= (A_q-Z_A) \times (B_q-Z_B)
+\end{align}
+$$
+This introduces additional subtraction operations, increasing the computational cost.</li>
+</ol>
+<h3 id="clipping-range">Clipping Range</h3>
+<ul>
+<li>clipping range <span class="arithmatex">\(= [\alpha, \beta]\)</span></li>
+<li>dynamic range <span class="arithmatex">\(= [r_\min, r_\max]\)</span></li>
+</ul>
+<p><img alt="image" src="../../assets/images/Hy_vtgJ91g.png" width="70%" /></p>
+<h4 id="min-max-clipping">Min-Max Clipping</h4>
+<p>For min-max clipping, clipping range = dynamic range</p>
+<div class="arithmatex">\[
+\begin{align}
+\alpha &amp;= r_\min \\
+\beta &amp;= r_\max
+\end{align}
+\]</div>
+<h4 id="moving-average-clipping">Moving Average Clipping</h4>
+<div class="arithmatex">\[
+\begin{align}
+\alpha_t &amp;=
+\begin{cases}
+    r_\min &amp;\text{if } t=0 \\
+    c\ r_\min + (1-c) \alpha_{t-1} &amp;\text{otherwise}
+\end{cases} \\
+\beta_t &amp;=
+\begin{cases}
+    r_\max &amp;\text{if } t=0 \\
+    c\ r_\max + (1-c) \beta_{t-1}  &amp;\text{otherwise}
+\end{cases} \\
+\end{align}
+\]</div>
+<h4 id="percentile-clipping">Percentile Clipping</h4>
+<p><a href="https://zh.wikipedia.org/zh-tw/%E7%99%BE%E5%88%86%E4%BD%8D%E6%95%B0">Percentile</a></p>
+<div class="arithmatex">\[
+\begin{align}
+\alpha &amp;= P_{5}(r)\\
+\beta &amp;= P_{95}(r)
+\end{align}
+\]</div>
+<h3 id="reduced-rangefull-range">Reduced Range/Full Range</h3>
+<p>For <span class="arithmatex">\(b\)</span>-bit <strong>signed</strong> integer quantization</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th><span class="arithmatex">\(q_\min\)</span></th>
+<th><span class="arithmatex">\(q_\max\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Full range</td>
+<td><span class="arithmatex">\(-2^{b-1}\)</span></td>
+<td><span class="arithmatex">\(2^{b-1}-1\)</span></td>
+</tr>
+<tr>
+<td>Reduce range</td>
+<td><span class="arithmatex">\(-2^{b-1}+1\)</span></td>
+<td><span class="arithmatex">\(2^{b-1}-1\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>For <span class="arithmatex">\(b\)</span>-bit <strong>unsigned</strong> integer quantization</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th><span class="arithmatex">\(q_\min\)</span></th>
+<th><span class="arithmatex">\(q_\max\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Full range</td>
+<td><span class="arithmatex">\(0\)</span></td>
+<td><span class="arithmatex">\(2^b-1\)</span></td>
+</tr>
+<tr>
+<td>Reduce range</td>
+<td><span class="arithmatex">\(0\)</span></td>
+<td><span class="arithmatex">\(2^b-2\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>For example, the integer representation of an 8-bit signed integer quantized number with reduce range is in the interval <span class="arithmatex">\([-127, 127]\)</span>.</p>
+<h3 id="calibration-algorithms">Calibration Algorithms</h3>
+<blockquote>
+<p>The process of choosing the input clipping range is known as calibration. The simplest technique (also the default in PyTorch) is to <strong>record the running minimum and maximum values and assign them to <span class="arithmatex">\(\alpha\)</span> and <span class="arithmatex">\(\beta\)</span></strong>.
+In PyTorch, <strong>Observer modules (<a href="https://github.com/PyTorch/PyTorch/blob/748d9d24940cd17938df963456c90fa1a13f3932/torch/ao/quantization/observer.py#L88">code</a>) collect statistics on the input values and calculate the qparams <code>scale</code> and <code>zero_point</code></strong> . Different calibration schemes result in different quantized outputs, and it’s best to empirically verify which scheme works best for your application and architecture.
+-- PyTorch</p>
+</blockquote>
+<h4 id="weight-only-quantization">Weight-only Quantization</h4>
+<p>In weight-only quantization, only weights are and quantized, while activations remain in full-precision (FP32).</p>
+<h4 id="static-quantization">Static Quantization</h4>
+<p>In static quantization approach, both <strong>weight</strong>'s and <strong>activation</strong>'s clipping range are pre-calculated and the resulting quantization parameters remain fixed during inference. This approach does not add any computational overhead during runtime.</p>
+<h4 id="dynamic-quantization">Dynamic Quantization</h4>
+<p>In dynamic quantization, <strong>activation</strong>'s clipping range as well as the quantization parameters are dynamically calculated for each activation map during runtime. This approach requires run-time computation of the signal statistics (min, max, percentile, etc.) which can have a very high overhead.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Weight-only quantization</th>
+<th>Static quantization</th>
+<th>Dynamic quantization</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>calibrate on weights</td>
+<td>before inference</td>
+<td>before inference</td>
+<td>before inference</td>
+</tr>
+<tr>
+<td>quantize on weights</td>
+<td>before inference</td>
+<td>before inference</td>
+<td>before inference</td>
+</tr>
+<tr>
+<td>calibrate on activations</td>
+<td>no</td>
+<td>before inference</td>
+<td>during inference</td>
+</tr>
+<tr>
+<td>quantize on activations</td>
+<td>no</td>
+<td>during inference</td>
+<td>during inference</td>
+</tr>
+<tr>
+<td>runtime overhead of quantization</td>
+<td>no</td>
+<td>low</td>
+<td>high</td>
+</tr>
+</tbody>
+</table>
+<h3 id="ptqqat">PTQ/QAT</h3>
+<h4 id="ptq-post-training-quantization">PTQ (Post-Training Quantization)</h4>
+<p><img alt="image" src="../../assets/images/H1Fvw_JYJg.png" />
+All the weights and activations quantization parameters are determined without any re-training of the NN model.
+In this assignment, we will use this method to perform quantization on our model.</p>
+<h4 id="qat-quantization-aware-training">QAT (Quantization-Aware Training)</h4>
+<p><img alt="image" src="../../assets/images/rJjmO_1K1e.png" />
+Quantization can slightly alter trained model parameters, shifting them from their original state. To mitigate this, the model can be re-trained with quantized parameters to achieve better convergence and lower loss.</p>
+<h5 id="straight-through-estimator-ste">Straight-Through Estimator (STE)</h5>
+<p>In QAT, since quantization is non-differentiable, standard backpropagation cannot compute gradients. The STE in Quantization-Aware Training (QAT) allows gradients to bypass this step, enabling the model to be trained as if it were using continuous values while still applying quantization constraints.</p>
+<p><img alt="image" src="../../assets/images/HyEjRlk5Jg.png" /></p>
+<h3 id="quantization-errors">Quantization Errors</h3>
+<center><img width=60% src="../../assets/images/ByoP0iHTC.png"></center>
+
+<p>A metric to evaluate the numerical error introduced by quantization.</p>
+<div class="arithmatex">\[
+\mathbf{L}(r, \hat r) \text{ , where } r \approx \hat r = \mathbf{D}(\mathbf{Q}(r))
+\]</div>
+<p>where <span class="arithmatex">\(r\)</span> is the original tensor, <span class="arithmatex">\(\hat r = \mathbf{D}(\mathbf{Q}(r))\)</span> is the tensor after quantization and dequantization.</p>
+<h4 id="mean-square-error-mse">Mean-Square Error (MSE)</h4>
+<p>The most commonly-used metric for quantization error.</p>
+<div class="arithmatex">\[
+\mathbf{L}(r, \hat r) = \frac{1}{N} \sum_{i=1}^N (r_i - \hat r_i)^2
+\]</div>
+<h4 id="other-quantization-error-metrics">Other Quantization Error Metrics</h4>
+<ul>
+<li>Cosine distance</li>
+<li>Pearson correlation coefficient</li>
+<li>Hessian-guided metric</li>
+</ul>
+<h3 id="fake-quantizationinteger-only-quantization">Fake Quantization/Integer-only Quantization</h3>
+<h4 id="fake-quantization-simulated-quantization">Fake Quantization (Simulated Quantization)</h4>
+<p>In simulated quantization, the quantized model parameters are stored in low-precision, but the operations (e.g. matrix multiplications and convolutions) are carried out with floating point arithmetic.</p>
+<p>Therefore, the quantized parameters need to be dequantized before the floating point operations</p>
+<center><img width=30% src="../../assets/images/ryRPFRg6C.png"></center>
+
+<h4 id="integer-only-quantization">Integer-only Quantization</h4>
+<p>In integer-only quantization, all the operations are performed using low-precision integer arithmetic.</p>
+<center><img width=30% src="../../assets/images/BJgoFCgTR.png"></center>
+
+<h3 id="hardware-friendly-design">Hardware-Friendly Design</h3>
+<h4 id="dyadic-quantization">Dyadic Quantization</h4>
+<p>A type of integer-only quantization that all of the scaling factors are restricted to be <a href="https://en.wikipedia.org/wiki/Dyadic_rational#:~:text=In%20mathematics%2C%20a%20dyadic%20rational,but%201%2F3%20is%20not.">dyadic numbers</a> defined as:</p>
+<div class="arithmatex">\[
+s \approx \frac{b}{2^c}
+\]</div>
+<p>where <span class="arithmatex">\(s\)</span> is a floating point number, and <span class="arithmatex">\(b\)</span> and <span class="arithmatex">\(c\)</span> are integers.</p>
+<p>Dyadic quantization can be implemented with only bit shift and integer arithmetic operations, which eliminates overhead of expensive dequantization and requantization.</p>
+<h4 id="power-of-two-uniformscale-quantization-similar-to-dyadic-quantization">Power-of-Two Uniform/Scale Quantization (Similar to Dyadic Quantization)</h4>
+<p>Same concept as dyadic quantization, we replace the numerator <span class="arithmatex">\(b\)</span> with <span class="arithmatex">\(1\)</span>. This approach improves hardware efficiency since it further eliminates the need for the integer multiplier.</p>
+<div class="arithmatex">\[
+s \approx \frac{1}{2^c}
+\]</div>
+<p>:::warning
+<strong>Power-of-Two Uniform/Scale Quantization</strong> constrains the scaling factor to a power-of-two value, enabling efficient computation through bit shifts, while <strong>Power-of-Two (Logarithmic) Quantization</strong> directly quantizes data to power-of-two values, reducing multiplications to simple bitwise operations.
+:::</p>
+<h3 id="derivation-of-quantized-mac">Derivation of Quantized MAC</h3>
+<p>In order to simplify the hardware implementation, we use layerwise symmetric uniform quantization for all layers.</p>
+<p>Here are the data types for inputs, weights, biases, outputs, and partial sums:</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>input/output</th>
+<th>weight</th>
+<th>bias/psum</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Data type</td>
+<td>uint8</td>
+<td>int8</td>
+<td>int32</td>
+</tr>
+</tbody>
+</table>
+<p>Note that the scaling factor of bias is the product of input's scale and weight's scale. And rounding method is truncation instead of round-to-nearest.</p>
+<div class="arithmatex">\[
+\tag{1}
+\begin{align}
+\bar x &amp;= \text{clamp} \left( \left\lfloor \frac{x}{s_x} \right\rceil + 128, 0, 255 \right) \in \mathbb{Z}_\text{uint8}^{\dim(x)} \\
+\bar w &amp;= \text{clamp} \left( \left\lfloor \frac{w}{s_w} \right\rceil, -128, 127 \right) \in \mathbb{Z}_\text{int8}^{\dim(w)} \\
+\bar b &amp;= \text{clamp} \left( \left\lfloor \frac{b}{s_x s_w} \right\rfloor, -2^{31}, 2^{31}-1 \right) \in \mathbb{Z}_\text{int32}^{\dim(b)} \\
+\bar y &amp;= \text{clamp} \left( \left\lfloor \frac{y}{s_y} \right\rceil + 128, 0, 255 \right) \in \mathbb{Z}_\text{uint8}^{\dim(y)}
+\end{align}
+\]</div>
+<blockquote>
+<p>The notation <span class="arithmatex">\(\mathbb{Z}^N\)</span> denotes a vector space of dimension <span class="arithmatex">\(N\)</span> where all elements (or components) are integers. See also <a href="https://en.wikipedia.org/wiki/Cartesian_product">Cartesian product</a>.</p>
+</blockquote>
+<p>where the scaling factors are calaulated by</p>
+<div class="arithmatex">\[
+\tag{2}
+\begin{align}
+s_x = \frac{2 \max(|x_\min|, |x_\max|)|}{255} \in \mathbb{R}_\text{float32} \\
+s_w = \frac{2 \max(|w_\min|, |w_\max|)|}{255} \in \mathbb{R}_\text{float32} \\
+s_y = \frac{2 \max(|y_\min|, |y_\max|)}{255} \in \mathbb{R}_\text{float32}
+\end{align}
+\]</div>
+<p>The original values can be approximated by dequantizing the quantized numbers.</p>
+<div class="arithmatex">\[
+\tag{3}
+\begin{align}
+x &amp;\approx s_x (\bar x - 128) \\
+w &amp;\approx s_w \bar w \\
+b &amp;\approx s_x s_w \bar b \\
+y &amp;\approx s_y (\bar y - 128)
+\end{align}
+\]</div>
+<h4 id="quantized-linear-layer-with-relu">Quantized Linear Layer with ReLU</h4>
+<p>Rectified linear unit (ReLU) is one of the most commonly-used activation functions due to its simplicity.</p>
+<div class="arithmatex">\[
+\text{ReLU}(x) = \max(x, 0) = \begin{cases}
+x, ~~\text{if} ~ x &gt; 0 \\
+0, ~~\text{otherwise}
+\end{cases}
+\]</div>
+<p>Linear layer:</p>
+<div class="arithmatex">\[
+y_i = \text{ReLU}(b_i + \sum_j x_j \cdot w_{ji})
+\]</div>
+<div class="arithmatex">\[
+s_y (\bar y_i - 128) = \text{ReLU}(s_x s_w (\bar b_i + \sum_j (\bar x_j - 128) \cdot \bar w_{ji}))
+\]</div>
+<p>The scaling factors <span class="arithmatex">\(s_x\)</span>, <span class="arithmatex">\(s_w\)</span>, and <span class="arithmatex">\(s_y\)</span> are typically in <span class="arithmatex">\([0, 1]\)</span>, which doesn't affect the result of ReLU.</p>
+<div class="arithmatex">\[
+\tag{5}
+\bar y_i =
+\underbrace{
+    \frac{s_x s_w}{s_y}
+    \overbrace{
+        \text{ReLU}(\bar b_i + \sum_j (\bar x_j - 128) \cdot \bar w_{ji})
+    }^{\text{only int32 operations}}}_{\text{float32 operations involved}
+} + 128
+\]</div>
+<h4 id="hardware-friendly-design_1">Hardware-Friendly Design</h4>
+<h5 id="power-of-two-quantization">Power-of-Two Quantization</h5>
+<p>With <span class="arithmatex">\(b = 1\)</span> in dyadic quantization, we further get power-of-two quantization:</p>
+<div class="arithmatex">\[
+s \approx \frac{1}{2^c} = 2^{-c} \text{ , where } c \in \mathbb{Z}
+\]</div>
+<p>The matrix multiplication can be approximated as:</p>
+<div class="arithmatex">\[
+\tag{6}
+\begin{align}
+\bar y_i &amp;\approx 2^{-(c_x + c_w - c_y)} \text{ReLU}(\bar b_i + \sum_j (\bar x_j - 128) \cdot \bar w_{ji}) + 128 \\
+&amp;= \left( \text{ReLU}(\bar b_i + \sum_j (\bar x_j - 128) \cdot \bar w_{ji}) \gg (c_x + c_w - c_y) \right) + 128 \\
+\end{align}
+\]</div>
+<p>We can use shifting to replace multiplication and division when applying a scaling factor.</p>
+<h3 id="derivation-of-batch-normalization-folding"><strong>Derivation of Batch Normalization Folding</strong></h3>
+<p>During inference, batch normalization (BN) can be fused with Conv2d or Linear layers to improve inference efficiency, reduce memory access, and increase computational throughput. This also simplifies the hardware implementation in <strong>Lab3</strong> by eliminating the need for separate BN computation. The derivation is as follows.</p>
+<p>Consider a batch normalization (BN) layer expressed by the following equation:</p>
+<div class="arithmatex">\[
+\tag{1}
+z_c = \frac{y_c - \mu_c}{\sqrt{\sigma_c^2 + \epsilon}} \cdot \gamma_c + \beta_c
+\]</div>
+<p>where:</p>
+<ul>
+<li><span class="arithmatex">\(y_c \in \mathbb{R}^{H \times W}\)</span>: the <span class="arithmatex">\(c\)</span>-th channel of the input tensor (assuming batch size <span class="arithmatex">\(N = 1\)</span>)</li>
+<li><span class="arithmatex">\(z_c \in \mathbb{R}^{H \times W}\)</span>: the <span class="arithmatex">\(c\)</span>-th channel of the output tensor (assuming batch size <span class="arithmatex">\(N = 1\)</span>)</li>
+<li><span class="arithmatex">\(\mu_c \in \mathbb{R}\)</span>: mean value of input activations along the <span class="arithmatex">\(c\)</span>-th channel</li>
+<li><span class="arithmatex">\(\sigma_c^2 \in \mathbb{R}\)</span>: variance of input activations along the <span class="arithmatex">\(c\)</span>-th channel</li>
+<li><span class="arithmatex">\(\gamma_c \in \mathbb{R}\)</span> and <span class="arithmatex">\(\beta_c \in \mathbb{R}\)</span>: BN parameters for the <span class="arithmatex">\(c\)</span>-th channel</li>
+<li><span class="arithmatex">\(\epsilon \in \mathbb{R}\)</span>: a small value for numerical stability during computation</li>
+</ul>
+<p>Expanding Eq. 1, we obtain:</p>
+<div class="arithmatex">\[
+z_c = \left( \frac{\gamma_c}{\sqrt{\sigma_c^2 + \epsilon}} \right) \cdot y_c + \left( \beta_c - \frac{\gamma_c \mu_c}{\sqrt{\sigma_c^2 + \epsilon}} \right)
+\]</div>
+<p>Assuming that the numerical distribution during inference is the same as in the training set, the statistics <span class="arithmatex">\(\mu_c\)</span> and <span class="arithmatex">\(\sigma_c^2\)</span> obtained during training are considered fixed values during inference. These values can then be fused into the preceding Conv2d or Linear layer.</p>
+<p>For example, consider a Linear layer:</p>
+<div class="arithmatex">\[
+\tag{2}
+y_c = b_c + \sum_i x_i \cdot w_{ic}
+\]</div>
+<p>where the output <span class="arithmatex">\(y\)</span> is normalized by BatchNorm to obtain <span class="arithmatex">\(z\)</span>. Substituting Eq. 2 into Eq. 1:</p>
+<div class="arithmatex">\[
+\begin{align}
+z_c &amp;= \left( \frac{\gamma_c}{\sqrt{\sigma_c^2 + \epsilon}} \right) \cdot \left( b_c + \sum_i x_i \cdot w_{ic} \right) + \left( \beta_c - \frac{\gamma_c \mu_c}{\sqrt{\sigma_c^2 + \epsilon}} \right) \\
+&amp;= \left( \sum_i x_i \cdot \frac{\gamma_cw_{ic}}{\sqrt{\sigma_c^2 + \epsilon}} \right) + \left( \beta_c - \frac{\gamma_c \mu_c}{\sqrt{\sigma_c^2 + \epsilon}} + \frac{\gamma_c b_c}{\sqrt{\sigma_c^2 + \epsilon}} \right) \\
+&amp;\triangleq \sum_i x_i \cdot w_{ic}' + b_c'
+\end{align}
+\]</div>
+<p>After rearranging, we observe that the <strong>Linear + BN</strong> operation can be expressed as a new <strong>Linear</strong> operation with updated weights and biases:</p>
+<div class="arithmatex">\[
+\tag{3}
+\begin{align}
+w_c' &amp;= \frac{\gamma_c}{\sqrt{\sigma_c^2 + \epsilon}} \cdot w_c \\
+b_c' &amp;= \frac{\gamma_c}{\sqrt{\sigma_c^2 + \epsilon}} (b_c - \mu_c) + \beta_c
+\end{align}
+\]</div>
+<h3 id="quantization-in-practice">Quantization in Practice</h3>
+<p>In this section, we will demonstrate how to perform quantization with PyTorch framework with a simple yet comprehensive example.</p>
+<p><img alt="image" src="../../assets/images/BJbmDv3xlx.png" width="50%" /></p>
+<p>Let's discuss the quantization process using PyTorch step by step:</p>
+<ol>
+<li><a href="#1-calibration-data">Calibration Data</a></li>
+<li><a href="#2-pre-trained-model">Pre-trained Model</a></li>
+<li><a href="#3-customize-quantization-scheme">Customize Quantization Scheme</a></li>
+<li><a href="#4-operator-fusion">Operator Fusion</a></li>
+<li><a href="#5-insert-observer">Insert Observer</a></li>
+<li><a href="#6-calibration">Calibration</a></li>
+<li><a href="#7-quantization">Quantization</a></li>
+</ol>
+<h4 id="1-calibration-data">1. Calibration Data</h4>
+<p>During calibration, only a small amount of data is required. Therefore, the batch size is set to 1
+<div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">dataset</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{DATASET}</span><span class="s1">&#39;</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="n">backend</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{Quantization_scheme}</span><span class="s1">&#39;</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="n">model_path</span> <span class="o">=</span> <span class="s1">&#39;path/to/your/model&#39;</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="o">*</span><span class="n">_</span><span class="p">,</span> <span class="n">test_loader</span> <span class="o">=</span> <span class="n">DATALOADERS</span><span class="p">[</span><span class="n">dataset</span><span class="p">](</span><span class="n">batch_size</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</span></code></pre></div></p>
+<h4 id="2-pre-trained-model">2. Pre-trained Model</h4>
+<p>Load model weights trained from Lab 1.1.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="n">model</span> <span class="o">=</span> <span class="n">network</span><span class="p">(</span><span class="n">in_channels</span><span class="p">,</span> <span class="n">in_size</span><span class="p">)</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="n">model</span><span class="o">.</span><span class="n">load_state_dict</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">model_path</span><span class="p">))</span>
+</span></code></pre></div>
+<h4 id="3-customize-quantization-scheme">3. Customize Quantization Scheme</h4>
+<p>Configure Quantization
+- <code>model = tq.QuantWrapper(model)</code> Converts the model into a format suitable for quantization.
+<div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="n">model</span> <span class="o">=</span> <span class="n">tq</span><span class="o">.</span><span class="n">QuantWrapper</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="n">model</span><span class="o">.</span><span class="n">qconfig</span> <span class="o">=</span> <span class="n">CustomQConfig</span><span class="p">[{</span><span class="n">Your_Quantization_Scheme_in_CustomQConfig_class</span><span class="p">}]</span><span class="o">.</span><span class="n">value</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Quantization backend: </span><span class="si">{</span><span class="n">model</span><span class="o">.</span><span class="n">qconfig</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span></code></pre></div></p>
+<ul>
+<li>
+<p><code>QConfig</code>
+<div class="language-py highlight"><span class="filename">qconfig.py</span><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">CustomQConfig</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>    <span class="n">POWER2</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">ao</span><span class="o">.</span><span class="n">quantization</span><span class="o">.</span><span class="n">QConfig</span><span class="p">(</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>        <span class="n">activation</span><span class="o">=</span><span class="n">PowerOfTwoObserver</span><span class="o">.</span><span class="n">with_args</span><span class="p">(</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>            <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">quint8</span><span class="p">,</span> <span class="n">qscheme</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">per_tensor_symmetric</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>        <span class="p">),</span>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>        <span class="n">weight</span><span class="o">=</span><span class="n">PowerOfTwoObserver</span><span class="o">.</span><span class="n">with_args</span><span class="p">(</span>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>            <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">qint8</span><span class="p">,</span> <span class="n">qscheme</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">per_tensor_symmetric</span>
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>        <span class="p">),</span>
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>    <span class="p">)</span>
+</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>    <span class="n">DEFAULT</span> <span class="o">=</span> <span class="kc">None</span>
+</span></code></pre></div>
+The <code>torch.ao.quantization.QConfig</code> class helps define custom quantization schemes by specifying:</p>
+</li>
+<li>
+<p>How activations should be quantized</p>
+</li>
+<li>How weights should be quantized</li>
+</ul>
+<p>These are parameters tells your custom observer (<code>class PowerOfTwoObserver(...)</code>) how to calculate <code>scale</code> and <code>zero point</code>.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Parameter</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>dtype=torch.quint8</code></td>
+<td style="text-align: left;">unsigned 8-bit quantization</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>dtype=torch.qint8</code></td>
+<td style="text-align: left;">signed 8-bit quantization</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>qscheme=torch.per_tensor_symmetric</code></td>
+<td style="text-align: left;">select symmetric quantization in one tensor</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>qscheme=torch.per_tensor_affine</code></td>
+<td style="text-align: left;">select asymmetric quantization in one tensor</td>
+</tr>
+</tbody>
+</table>
+<h4 id="4-operator-fusion">4. Operator Fusion</h4>
+<p>Operator fusion is a technique that combines multiple operations into a single efficient computation to reduce memory overhead and improve execution speed.</p>
+<blockquote>
+<p>Module fusion combines multiple sequential modules (eg: [Conv2d, BatchNorm, ReLU]) into one. Fusing modules means the compiler needs to only run one kernel instead of many; this speeds things up and improves accuracy by reducing quantization error.
+-- PyTorch</p>
+</blockquote>
+<p>Common fusions include:
+- <strong>Conv2D + BatchNorm + ReLU</strong> → Fused into a single Conv2D operation.
+- <strong>Conv2D + ReLU</strong> → Fused into a single Conv2D operation.
+- <strong>Linear + ReLU</strong> → Fused into a single linear transformation with an activation function.</p>
+<p>If you want to performed module fusion to improve performance, you should call the following API before calibration.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="n">tq</span><span class="o">.</span><span class="n">fuse_modules</span><span class="p">(</span><span class="n">model</span><span class="p">:</span> <span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">,</span> <span class="n">modules_to_fuse</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">nn</span><span class="o">.</span><span class="n">Module</span>
+</span></code></pre></div>
+<p>You can see the <a href="https://pytorch.org/docs/stable/generated/torch.ao.quantization.fuse_modules.fuse_modules.html">reference</a> for more details.</p>
+<h4 id="5-insert-observer">5. Insert Observer</h4>
+<ul>
+<li><code>tq.prepare(model, inplace=True)</code> : Inserts fake quantization modules to track activations.
+<div class="language-python highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="n">tq</span><span class="o">.</span><span class="n">prepare</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span></code></pre></div></li>
+</ul>
+<h4 id="6-calibration">6. Calibration</h4>
+<p>Define calibration function first:</p>
+<p><div class="language-python highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">calibrate</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">loader</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">DEFAULT_DEVICE</span><span class="p">):</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>    <span class="n">model</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>    <span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">loader</span><span class="p">:</span>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>        <span class="n">model</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">))</span>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>        <span class="k">break</span>
+</span></code></pre></div>
+Apply calibration by directly call the above function after inserting the observer via <code>tq.prepare</code>.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="n">calibrate</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">test_loader</span><span class="p">,</span> <span class="s2">&quot;cpu&quot;</span><span class="p">)</span>
+</span></code></pre></div>
+<p>This runs one batch of data (previous step) through the model to collect activation statistics.</p>
+<h4 id="7-quantization">7. Quantization</h4>
+<p>Use <code>tq.convert(model.cpu(), inplace=True)</code> to convert the model into a fully-quantized model.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="n">tq</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">cpu</span><span class="p">(),</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span></code></pre></div>
+<p>Finally, save your quantized model with given filename</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="n">save_model</span><span class="p">({</span><span class="n">Your</span> <span class="n">Model</span><span class="p">},</span> <span class="s2">&quot;filename.pt&quot;</span><span class="p">)</span>
+</span></code></pre></div>
+<h3 id="reference">Reference</h3>
+<ul>
+<li><a href="https://arxiv.org/abs/2103.13630">A Survey of Quantization Methods for Efficient Neural Network Inference</a></li>
+<li><a href="https://pytorch.org/docs/stable/quantization.html">PyTorch Quantization</a></li>
+<li><a href="https://arxiv.org/pdf/2009.07485">Pooling Methods in Deep Neural Networks, a Review</a></li>
+<li><a href="https://docs.nvidia.com/deeplearning/performance">NVIDIA Deeplearning Performance Documents</a></li>
+</ul>
+<h2 id="practice">Practice</h2>
+<h3 id="1-train-a-vgg-like-model-using-cifar-10-dataset">1. Train a VGG-like Model using CIFAR-10 dataset.</h3>
+<p>VGG is a classic CNN architecture used in computer vision. Compared to the previous CNNs, it only use 3x3 convolution, making it easy to be implmeneted and supported by existing and customized hardware accelerators.</p>
+<p>In this course, we are going to deploy a VGG-like model onto our custom hardware accelerator and complete an end-to-end inference of image recognition. In this lab, students are requested to implement a VGG-like model in PyTorch with only the following operators:</p>
+<ul>
+<li><code>Conv2d</code> with 3x3 kernel size, stride 1, and padding 1</li>
+<li><code>Linear</code></li>
+<li><code>ReLU</code></li>
+<li><code>MaxPool2d</code> with 2x2 kernel size and stride 2</li>
+<li><code>BatchNorm2d</code></li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Layer</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Conv1</code></td>
+<td>Conv2D (3 → 64)</td>
+</tr>
+<tr>
+<td><code>MaxPool</code></td>
+<td>2×2 Pooling</td>
+</tr>
+<tr>
+<td><code>Conv2</code></td>
+<td>Conv2D (64 → 192)</td>
+</tr>
+<tr>
+<td><code>MaxPool</code></td>
+<td>2×2 Pooling</td>
+</tr>
+<tr>
+<td><code>Conv3</code></td>
+<td>Conv2D (192 → 384)</td>
+</tr>
+<tr>
+<td><code>Conv4</code></td>
+<td>Conv2D (384 → 256)</td>
+</tr>
+<tr>
+<td><code>Conv5</code></td>
+<td>Conv2D (256 → 256)</td>
+</tr>
+<tr>
+<td><code>MaxPool</code></td>
+<td>2×2 Pooling</td>
+</tr>
+<tr>
+<td><code>Flatten</code></td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>FC6</code></td>
+<td>Linear (256*fmap_size² → 256)</td>
+</tr>
+<tr>
+<td><code>FC7</code></td>
+<td>Linear (256 → 128)</td>
+</tr>
+<tr>
+<td><code>FC8</code></td>
+<td>Linear (128 → num_classes)</td>
+</tr>
+</tbody>
+</table>
+<p>Students are required to design and train your model with only allowed operators using as few parameters as possible while ensuring the accuracy greater than 80%. You can use any training techniques and adjust the hyperparameters (e.g. learning rate tuning, optimizer, etc.) to achieve this goal.</p>
+<p>For full precision model, your model should achive the following metrics:
+- <font style="color:#fc6a49"><strong>top-1 accuracy remains above 80% on the CIFAR-10 classification task</strong></font></p>
+<h3 id="2-quantize-the-vgg-like-model-as-int8-precision">2. Quantize the VGG-like Model as INT8 Precision</h3>
+<p>Then, quantize the model to INT8 precision while preserving a high level of accuracy compared to the full-precision model.</p>
+<h4 id="quantization-scheme">Quantization scheme</h4>
+<p>Use the <strong>power-of-two uniform/scale, symmetric quantization</strong> we previously-mentioned to quantize your model.
+- Complete the <strong>QConfig observer setup</strong> for Post-Training Quantization (PTQ) calibration.
+- Reference: <a href="https://pytorch.org/docs/stable/_modules/torch/ao/quantization/observer.html#MinMaxObserver">PyTorch QConfig documents</a></p>
+<p>For quantized model, your model should achive the following metrics:</p>
+<ul>
+<li><font style="color:#fc6a49"><strong>model size <span class="arithmatex">\(&lt;\)</span> 4MB</strong></font></li>
+<li><font style="color:#fc6a49"><strong>top-1 accuracy on CIFAR-10 <span class="arithmatex">\(\ge\)</span> 80%</strong></font></li>
+<li><font style="color:#fc6a49"><strong>accuracy drop <span class="arithmatex">\(\le\)</span> 1% compared to your full-precision model</strong></font></li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../../quick-start/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Quick Start">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Quick Start
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../lab2/" class="md-footer__link md-footer__link--next" aria-label="Next: Lab 2 - Performance Modeling">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Lab 2 - Performance Modeling
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/NCKU-AISLAB/force-ai" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.path", "navigation.top", "navigation.footer", "content.code.copy", "content.code.select", "content.code.annotate"], "search": "../../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.13a4f30d.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/gh/rod2ik/cdn@main/mkdocs/javascripts/mkdocs-graphviz.js"></script>
+      
+    
+  </body>
+</html>
