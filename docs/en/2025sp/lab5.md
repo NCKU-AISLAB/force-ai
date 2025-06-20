@@ -43,7 +43,7 @@ AI compilers enable the deployment of models from high-level frameworks like Ten
 
 One such compiler is [TVM](https://tvm.apache.org/), an open-source machine learning compiler framework designed to optimize and deploy deep learning models efficiently across diverse hardware targets. TVM automates the process of translating models into optimized code tailored to specific hardware architectures.
 
-![image](/assets/images/S1JipjLyll.png)
+![image](../../assets/images/S1JipjLyll.png)
 
 ### Bring Your Own Codegen (BYOC)
 The compilation process begins by converting models from TensorFlow or PyTorch into an Intermediate Representation (IR). In the high-level IR, computations are structured as a computation graph, where each node represents an operation (e.g., matrix multiplication, convolution). This graph is then progressively optimized through multiple stages. Finally, TVM’s code generation (codegen) module translates the optimized IR into low-level C code or other backend-specific code for execution on the target hardware.
@@ -81,7 +81,7 @@ For more information about BYOC, see [How to Bring Your Own Codegen to TVM](http
     { rank=same; cg_label; optimization }
 }-->
 
-<img src="/assets/svgs/lab5_graphviz_0.svg" alt="graphviz_0">
+<img src="../../assets/svgs/lab5_graphviz_0.svg" alt="graphviz_0">
 
 
 !!! question "Question: What will Relay look like?"
@@ -143,7 +143,7 @@ According to the **BYOC (Bring Your Own Codegen)** framework, in order to produc
     codegen -> runtime;
 }-->
 
-<img src="/assets/svgs/lab5_graphviz_1.svg" alt="graphviz_1">
+<img src="../../assets/svgs/lab5_graphviz_1.svg" alt="graphviz_1">
 
 
 ## Lab 5.2 - Optimization
@@ -259,7 +259,7 @@ After applying these operations, we quantize the result back to the original dat
     cast -> cast_op;
 }-->
 
-<img src="/assets/svgs/lab5_graphviz_2.svg" alt="graphviz_2">
+<img src="../../assets/svgs/lab5_graphviz_2.svg" alt="graphviz_2">
 
 
 Following the fusion and annotation of the model subgraph, the subsequent step involves generating customized C code aligned with the target ASIC driver and its corresponding API.
@@ -394,7 +394,7 @@ This modular design not only increases code readability and reusability but also
     tvm_c_func_call_gen -> visit_expr [label=" Get codegen function", style=dashed];
 }-->
 
-<img src="/assets/svgs/lab5_graphviz_3.svg" alt="graphviz_3">
+<img src="../../assets/svgs/lab5_graphviz_3.svg" alt="graphviz_3">
 
 
 ### TVM Relay External Codegen: C Backend Walkthrough - `codegen.py`
@@ -1060,12 +1060,12 @@ It includes:
 
 3. Open the output file:
    - Click **Open...**
-   ![Open Massif Visualizer](/assets/images//BJtaDetkgl.png)
+   ![Open Massif Visualizer](../../assets/images//BJtaDetkgl.png)
    - Choose `massif.out.massif_test`
-   ![Open files](/assets/images//Bkw7ueYkll.png)
+   ![Open files](../../assets/images//Bkw7ueYkll.png)
 
 4. View the memory usage graph:
-   ![Massif Graph](/assets/images//r14cueFJgx.png)
+   ![Massif Graph](../../assets/images//r14cueFJgx.png)
 
 This visualization helps you easily pinpoint memory-intensive regions and track memory growth over time.
 There are also gui application called `massif-visualizer`, it is...
@@ -1405,7 +1405,7 @@ xychart-beta
 
 !!! tip "VS Code Extension - Markdown Preview Mermaid"
     This extension allows you to preview Mermaid diagrams directly in Markdown files.
-    ![Preview Screenshot](/assets/images//Hkc4zjcJle.png)
+    ![Preview Screenshot](../../assets/images//Hkc4zjcJle.png)
 
 ### Clean Up
 

@@ -28,7 +28,7 @@ $$
 
 Convolutions are widely used for **feature extraction** in computer vision tasks. A convolution operator can defined by its size, stride, padding, dilation, etc.
 
-![image](/assets/images/rkcOj22Kkl.png)
+![image](../../assets/images/rkcOj22Kkl.png)
 
 Here is the mathematical representation:
 
@@ -44,7 +44,7 @@ In AlexNet, 11×11, 5×5, and 3×3 Conv2D layers are used. However, using multip
 
 Fully-connected layers, also known as linear layers or dense layers, connect every input neuron to every output neuron and are commonly used as the **classifier** in a neural network.
 
-![image](/assets/images/HJzUi2hFyg.png)
+![image](../../assets/images/HJzUi2hFyg.png)
 
 $$
 \mathbf{y} = \mathbf{x} \mathbf{W}^{T} + \mathbf{b}
@@ -55,7 +55,7 @@ $$
 #### Rectified Linear Unit (ReLU)
 ReLU is an activation function, which sets all negative values to zero while keeping positive values unchanged. It introduces non-linearity to the model, helping neural networks learn complex patterns while mitigating the vanishing gradient problem compared to other activation functions like sigmoid, hyperbolic tangent, etc.
 
-![image](/assets/images/HyJ5SCEt1x.png) {width=75%}
+![image](../../assets/images/HyJ5SCEt1x.png) {width=75%}
 
 $$
 \operatorname{ReLU}(x) = \cases{
@@ -68,7 +68,7 @@ $$
 
 Max pooling is a downsampling operation commonly used in convolutional neural networks (CNNs) to reduce the spatial dimensions of feature maps while preserving important features. In the following formulas, we present the typical 2D max pooling operation.
 
-![image](/assets/images/rJxBvN22FJg.png) {width=80%}
+![image](../../assets/images/rJxBvN22FJg.png) {width=80%}
 
 $$
 out(N_i, C_j, h, w) =
@@ -100,7 +100,7 @@ The learnable parameters $\gamma$ and $\beta$ are updated during training but re
 
 As the following figure shows, the **batch normalization are applied per channel**. That is, the mean and variance are computed over all elements in the batch ($N$) and spatial dimension ($H$ and $W$). Each channel has independent $\gamma_c$ and $\beta_c$ parameters.
 
-![image](/assets/images/By-I803Y1g.png)
+![image](../../assets/images/By-I803Y1g.png)
 
 ### 3. Model Training and Hyperparameter Tuning
 You can use these techniques to improve the accuracy and efficiency of model training.
@@ -142,7 +142,7 @@ In the beginning, we need to discuss the different data types that can be used f
 
 ### Hardware Energy/Area Cost on Different Numeric Operation
 
-![image](/assets/images/BkaAOS7O1e.png)
+![image](../../assets/images/BkaAOS7O1e.png)
 
 > ##### **Floating-point** arithmetic is more computationally expensive due to the overhead of ***mantissa alignment*** and ***mantissa multiplications***
 
@@ -158,7 +158,7 @@ In the beginning, we need to discuss the different data types that can be used f
 
 ##### Uniform Quantization (Linear Quantization)
 - Uniform quantization maps input values to equally spaced discrete levels.
-![image](/assets/images/ryhkkin_ke.png)
+![image](../../assets/images/ryhkkin_ke.png)
 
 $$
 \begin{align}
@@ -180,7 +180,7 @@ The precise definition of the **scaling factor $s$** and **zero point $z$** vari
 
 #### Non-Uniform Quantization (Logarithmic/power-of-2 Quantization)
 - Non-uniform quantization maps input value to varying step sizes.
-![image](/assets/images/SyGGyjhdJl.png)
+![image](../../assets/images/SyGGyjhdJl.png)
 
 $$
 \begin{align}
@@ -193,7 +193,7 @@ $$
 
 #### Asymmetric/Affine Uniform Quantiztaion
 - Asymmetric quantization allows a nonzero zero point to better represent skewed data distributions at the cost of additional processing.
-![image](/assets/images/HkCaA92O1x.png)
+![image](../../assets/images/HkCaA92O1x.png)
 
 - asymmetric: $\beta \ne -\alpha$
 
@@ -206,7 +206,7 @@ $$
 
 #### Symmetric Uniform Quantiztaion
 - Symmetric quantization uses a zero-centered scale for positive and negative values
-![image](/assets/images/SJRnCchdkx.png)
+![image](../../assets/images/SJRnCchdkx.png)
 
 - symmetric: $\beta = -\alpha$
 
@@ -244,7 +244,7 @@ This introduces additional subtraction operations, increasing the computational 
 - clipping range $= [\alpha, \beta]$
 - dynamic range $= [r_\min, r_\max]$
 
-![image](/assets/images/Hy_vtgJ91g.png){width=70%}
+![image](../../assets/images/Hy_vtgJ91g.png){width=70%}
 
 #### Min-Max Clipping
 
@@ -331,19 +331,20 @@ In dynamic quantization, **activation**'s clipping range as well as the quantiza
 
 ### PTQ/QAT
 #### PTQ (Post-Training Quantization)
-![image](/assets/images/H1Fvw_JYJg.png)
+![image](../../assets/images/H1Fvw_JYJg.png)
 All the weights and activations quantization parameters are determined without any re-training of the NN model.
 In this assignment, we will use this method to perform quantization on our model.
 #### QAT (Quantization-Aware Training)
-![image](/assets/images/rJjmO_1K1e.png)
+![image](../../assets/images/rJjmO_1K1e.png)
 Quantization can slightly alter trained model parameters, shifting them from their original state. To mitigate this, the model can be re-trained with quantized parameters to achieve better convergence and lower loss.
 ##### Straight-Through Estimator (STE)
 In QAT, since quantization is non-differentiable, standard backpropagation cannot compute gradients. The STE in Quantization-Aware Training (QAT) allows gradients to bypass this step, enabling the model to be trained as if it were using continuous values while still applying quantization constraints.
 
-![image](/assets/images/HyEjRlk5Jg.png)
+![image](../../assets/images/HyEjRlk5Jg.png)
 
 ### Quantization Errors
-<center><img width=60% src="/assets/images/ByoP0iHTC.png"></center>
+
+<center><img width=60% src="../../assets/images/ByoP0iHTC.png"></center>
 
 A metric to evaluate the numerical error introduced by quantization.
 
@@ -375,13 +376,13 @@ In simulated quantization, the quantized model parameters are stored in low-prec
 
 Therefore, the quantized parameters need to be dequantized before the floating point operations
 
-<center><img width=30% src="/assets/images//ryRPFRg6C.png"></center>
+<center><img width=30% src="../../assets/images/ryRPFRg6C.png"></center>
 
 #### Integer-only Quantization
 
 In integer-only quantization, all the operations are performed using low-precision integer arithmetic.
 
-<center><img width=30% src="/assets/images//BJgoFCgTR.png"></center>
+<center><img width=30% src="../../assets/images/BJgoFCgTR.png"></center>
 
 ### Hardware-Friendly Design
 #### Dyadic Quantization
@@ -568,7 +569,7 @@ $$
 
 In this section, we will demonstrate how to perform quantization with PyTorch framework with a simple yet comprehensive example.
 
-![image](/assets/images/BJbmDv3xlx.png){ width=50% }
+![image](../../assets/images/BJbmDv3xlx.png){ width=50% }
 
 Let's discuss the quantization process using PyTorch step by step:
 

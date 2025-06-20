@@ -5,7 +5,7 @@
 In this lab, we will implement a software driver to enable integration and operation of the previously designed hardware accelerator with the host system. Through mechanisms such as memory-mapped I/O or interrupts, we establish control and data communication between the CPU and the accelerator. The **driver acts as a critical interface layer between the runtime system and the hardware accelerator**, exposing low-level register or memory access as high-level software APIs. The **runtime**, which orchestrates the overall inference flow, leverages the driver to configure the accelerator, transfer data, and retrieve results. This separation of concerns allows the runtime to focus on model-level control logic, while the driver handles hardware-specific interactions.
 This architecture enables us to evaluate the performance gains provided by the accelerator during real model inference. Additionally, we investigate the feasibility and effectiveness of optimization techniques for accelerating inference in the absence of hardware acceleration. Through these experiments and analyses, we aim to gain a comprehensive understanding of how hardware acceleration and optimization affect model inference performance under different scenarios, thereby providing practical insights for future system design and deployment.
 
-![image](/assets/images/HJjjWpqR1x.png)
+![image](../../assets/images/HJjjWpqR1x.png)
 
 ## Lab 4.1 - Device Driver
 
@@ -73,7 +73,7 @@ Interrupts allow devices to asynchronously notify the CPU of events. The CPU pau
 ### Software-Hardware Co-design Framework
 
 
-![image](/assets/images/BybkMpcRJx.png)
+![image](../../assets/images/BybkMpcRJx.png)
 
 
 
@@ -153,7 +153,7 @@ HardwareAbstractionLayer::HardwareAbstractionLayer(uint32_t baseaddr,
     }"];
 }-->
 
-<img src="/assets/svgs/lab4_graphviz_0.svg" alt="graphviz_0">
+<img src="../../assets/svgs/lab4_graphviz_0.svg" alt="graphviz_0">
 
 
 !!! warning Segmentation fault
@@ -169,7 +169,7 @@ HardwareAbstractionLayer::HardwareAbstractionLayer(uint32_t baseaddr,
        }"];
     }-->
 
-<img src="/assets/svgs/lab4_graphviz_1.svg" alt="graphviz_1">
+<img src="../../assets/svgs/lab4_graphviz_1.svg" alt="graphviz_1">
 
 
     If need, the MMU eed to be optimized in the future,  but in this lab, 4GB address space is enough for simulations.
@@ -801,7 +801,7 @@ StudentID_lab4
 
 In Lab 3, you have already implemented the complete PE-array architecture and the PPU. Now, in this lab, the TAs will provide you with the entire accelerator IP. The complete architecture is shown in the diagram below, which includes sub-modules such as the controller, global buffer, DMA, and MMIO AXI interface. We have already used Verilator to convert it into a C++ library and connected it to the HAL. Your task for this lab is to implement the DLA driver on top of the HAL.
 
-![image](/assets/images/HJ1bz69C1x.png)
+![image](../../assets/images/HJ1bz69C1x.png)
 
 
 #### MMIO register configuration
@@ -875,7 +875,7 @@ The details of the bitwise configuration for the first four MMIO registers are a
     }"];
 }-->
 
-<img src="/assets/svgs/lab4_graphviz_2.svg" alt="graphviz_2">
+<img src="../../assets/svgs/lab4_graphviz_2.svg" alt="graphviz_2">
 
 
 - **operation**
@@ -903,7 +903,7 @@ The details of the bitwise configuration for the first four MMIO registers are a
     }"];
 }-->
 
-<img src="/assets/svgs/lab4_graphviz_3.svg" alt="graphviz_3">
+<img src="../../assets/svgs/lab4_graphviz_3.svg" alt="graphviz_3">
 
 
 ##### 3. Shape Parameter (shape_param1) - Please refer to the paper for the definition.
@@ -922,7 +922,7 @@ The details of the bitwise configuration for the first four MMIO registers are a
     }"];
 }-->
 
-<img src="/assets/svgs/lab4_graphviz_4.svg" alt="graphviz_4">
+<img src="../../assets/svgs/lab4_graphviz_4.svg" alt="graphviz_4">
 
 
 - **`PAD = 1`**: Only padding of size 1 is supported. Other padding sizes will not be implemented in this lab.
@@ -940,7 +940,7 @@ The details of the bitwise configuration for the first four MMIO registers are a
     }"];
 }-->
 
-<img src="/assets/svgs/lab4_graphviz_5.svg" alt="graphviz_5">
+<img src="../../assets/svgs/lab4_graphviz_5.svg" alt="graphviz_5">
 
 
 **Note:** Ensure to account for padding when calculating width (W) and height (H) before writing the value to the register. Add `2 * padding` to both `W` and `H`, then apply the necessary bitwise operations.
@@ -976,7 +976,7 @@ After completing the low-level MMIO configuration driver, we need to implement a
 
 **"The size of the GLB is configured to 64 KB."**
 
-![image](/assets/images/SyR76DmJxe.png)
+![image](../../assets/images/SyR76DmJxe.png)
 
 Students can implement the design based on the illustration provided in this diagram. The size of each block can be computed based on the shape parameters and mapping parameters, following the methodology used in the previous lab.
 

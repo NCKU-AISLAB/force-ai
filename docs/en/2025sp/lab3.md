@@ -4,7 +4,7 @@
 
 In this lab, we will design an accelerator based on the Eyeriss paper. The goal is to implement the hardware architecture required to efficiently compute the VGG-8 model designed in Lab 1.
 
-![image](/assets/images/Hyd3aH9KJg.png)
+![image](../../assets/images/Hyd3aH9KJg.png)
 
 This includes key operations such as `2D Convolution` fused with `BatchNorm2D`, `Linear`, `ReLU`, `MaxPool`, and `Post-Quantization`.
 
@@ -293,7 +293,7 @@ $$
 
 ## Hardware Architecture
 
-![image](/assets/images/Hk4PcsK9ye.png)
+![image](../../assets/images/Hk4PcsK9ye.png)
 
 ### Controller
 The Controller in Eyeriss acts as the central unit that orchestrates the entire execution process. It ensures that different modules operate in a synchronized manner and that the correct data is processed at the right time. The key responsibilities of the Controller include:
@@ -415,7 +415,7 @@ In a typical handshake, control signals are exchanged between the sender and rec
 
 #### Ready-Valid Handshake (Common in AXI Protocols):
 
-![image](/assets/images/rJBnV4P91e.png)
+![image](../../assets/images/rJBnV4P91e.png)
 - A widely used mechanism in hardware interfaces where the sender asserts a valid signal when data is available, and the receiver asserts a ready signal when it is ready to consume the data.
 - The transaction is completed when both valid and ready signals are asserted simultaneously.
 - In this lab, we use this for our handshake mechanism
@@ -496,7 +496,7 @@ The following is the definition of `PE_config`
     }"];
 }-->
 
-<img src="/assets/svgs/lab3_graphviz_0.svg" alt="graphviz_0">
+<img src="../../assets/svgs/lab3_graphviz_0.svg" alt="graphviz_0">
 
 `mode = 0` means `CONV`
 `mode = 1` means `FC Layer`
@@ -615,7 +615,7 @@ In addtion to PE array, you need to implement the following submodules to constr
 
 #### GIN/GON
 
-![image](/assets/images/SkhAoOoFkl.png)
+![image](../../assets/images/SkhAoOoFkl.png)
 
 ##### I/O ports
 
@@ -766,7 +766,7 @@ the testbench will provide the first data sample when maxpool_init is asserted, 
 - MaxPool is not required
 the testbench will read the output data in the cycle following the data input.
 
-![image](/assets/images/rJfmA399Jx.png)
+![image](../../assets/images/rJfmA399Jx.png)
 
 
 #### I/O ports
